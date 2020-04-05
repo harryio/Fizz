@@ -1,2 +1,3 @@
 rootProject.name='Fizz'
 include ':app'
+include ':network'
