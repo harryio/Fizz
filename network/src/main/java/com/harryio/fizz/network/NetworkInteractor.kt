@@ -1,7 +1,9 @@
 package com.harryio.fizz.network
 
+import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val BASE_API_URL = "https://api.themoviedb.org/"
 
@@ -27,6 +29,7 @@ class NetworkInteractor {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder().baseUrl(BASE_API_URL)
                     .client(getOkHttpClient())
+                    .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
                     .build()
             }
 
