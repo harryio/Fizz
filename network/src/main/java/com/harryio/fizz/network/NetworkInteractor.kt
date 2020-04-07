@@ -21,9 +21,9 @@ class NetworkInteractor {
 
         private var okHttpClient: OkHttpClient? = null
 
-        fun getMovieService(): MovieService {
+        fun getMovieService(apiKey: String): MovieService {
             if (movieService == null) {
-                movieService = getRetrofit().create(MovieService::class.java)
+                movieService = getRetrofit(apiKey).create(MovieService::class.java)
             }
 
             return movieService!!
@@ -37,10 +37,10 @@ class NetworkInteractor {
             return moshi!!
         }
 
-        private fun getRetrofit(): Retrofit {
+        private fun getRetrofit(apiKey: String): Retrofit {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder().baseUrl(BASE_API_URL)
-                    .client(getOkHttpClient())
+                    .client(getOkHttpClient(apiKey))
                     .addCallAdapterFactory(ApiResponseAdapter())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .addConverterFactory(MoshiConverterFactory.create(getMoshi()))
@@ -50,9 +50,10 @@ class NetworkInteractor {
             return retrofit!!
         }
 
-        private fun getOkHttpClient(): OkHttpClient {
+        private fun getOkHttpClient(apiKey: String): OkHttpClient {
             if (okHttpClient == null) {
-                okHttpClient = OkHttpClient.Builder().build()
+                okHttpClient =
+                    OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor(apiKey)).build()
             }
 
             return okHttpClient!!
