@@ -13,6 +13,8 @@ class NetworkInteractor(private val apiKey: String) {
 
     companion object {
 
+        internal val moshi by lazy { Moshi.Builder().build() }
+
         private var networkInteractor: NetworkInteractor? = null
 
         fun getMovieService(apiKey: String): MovieService {
@@ -25,8 +27,6 @@ class NetworkInteractor(private val apiKey: String) {
     }
 
     private val movieService by lazy { retrofit.create(MovieService::class.java) }
-
-    private val moshi by lazy { Moshi.Builder().build() }
 
     private val retrofit by lazy {
         Retrofit.Builder().baseUrl(BASE_API_URL)

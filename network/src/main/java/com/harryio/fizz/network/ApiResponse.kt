@@ -4,7 +4,6 @@ import com.harryio.fizz.common.GENERIC_ERROR
 import com.squareup.moshi.Json
 import retrofit2.HttpException
 import retrofit2.Response
-import javax.net.ssl.HttpsURLConnection
 
 sealed class ApiResponse<T> {
 
@@ -22,14 +21,9 @@ sealed class ApiResponse<T> {
 
         fun <T> create(response: Response<T>): ApiResponse<T> {
             return if (response.isSuccessful) {
-                val body = response.body()
-                if (body == null || response.code() == HttpsURLConnection.HTTP_NO_CONTENT) {
-                    ApiEmptyResponse()
-                } else {
-                    ApiSuccessResponse(body)
-                }
+                ApiSuccessResponse(response.body())
             } else {
-                return ApiErrorResponse(
+                ApiErrorResponse(
                     parseErrorStatusCode(response.errorBody()?.string())
                         ?: response.code().toString()
                 )
@@ -38,9 +32,7 @@ sealed class ApiResponse<T> {
     }
 }
 
-class ApiEmptyResponse<T> : ApiResponse<T>()
-
-data class ApiSuccessResponse<T>(val body: T) : ApiResponse<T>()
+data class ApiSuccessResponse<T>(val body: T?) : ApiResponse<T>()
 
 data class ApiErrorResponse<T>(val errorStatusCode: String) : ApiResponse<T>()
 
@@ -49,6 +41,6 @@ private data class ErrorResponse(@Json(name = "status_code") val statusCode: Str
 private fun parseErrorStatusCode(response: String?): String? = if (response == null) {
     null
 } else {
-    NetworkInteractor.getMoshi().adapter<ErrorResponse>(ErrorResponse::class.java)
+    NetworkInteractor.moshi.adapter<ErrorResponse>(ErrorResponse::class.java)
         .fromJson(response)?.statusCode
 }
