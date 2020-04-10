@@ -23,6 +23,14 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -33,6 +41,7 @@ dependencies {
     api androidLibs.ktx
     api androidLibs.viewModel
     api androidLibs.liveData
+    api androidLibs.fragment
 
     implementation libraries.rxJava
 }

@@ -5,6 +5,7 @@ ext {
     def appCompatVersion = "1.1.0"
     def ktxVersion = "1.0.2"
     def lifecycleVersion = "2.2.0"
+    def fragmentVersion = "1.2.4"
 
     def jUnitVersion = "4.12"
     def androidJUnitVersion = "1.1.1"
@@ -21,8 +22,8 @@ ext {
             viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
             liveData: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
             navigationFragment: "androidx.navigation:navigation-fragment-ktx:$navVersion",
-            navigationUI: "androidx.navigation:navigation-ui-ktx:$navVersion"
-
+            navigationUI: "androidx.navigation:navigation-ui-ktx:$navVersion",
+            fragment: "androidx.fragment:fragment-ktx:$fragmentVersion"
     ]
 
     testLibs = [
