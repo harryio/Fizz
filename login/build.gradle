@@ -30,15 +30,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation androidLibs.appCompat
-    implementation androidLibs.ktx
-    implementation androidLibs.viewModel
-    implementation androidLibs.liveData
+    implementation project(path: ':domain')
+    implementation project(path: ':common-feature')
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit
     androidTestImplementation androidTestLibs.espresso
-    implementation project(path: ':domain')
 }

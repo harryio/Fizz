@@ -14,8 +14,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-
-        buildConfigField("String", "API_KEY", "${tmdb_api_key}")
     }
 
     buildTypes {
@@ -29,9 +27,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':network')
-    implementation project(path: ':common')
+    api libraries.kotlinStdLib
 
-    implementation libraries.kotlinStdLib
-    api libraries.rxJava
+    api androidLibs.appCompat
+    api androidLibs.ktx
+    api androidLibs.viewModel
+    api androidLibs.liveData
+
+    implementation libraries.rxJava
 }
