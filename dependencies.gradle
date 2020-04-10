@@ -19,7 +19,10 @@ ext {
             appCompat: "androidx.appcompat:appcompat:$appCompatVersion",
             ktx: "androidx.core:core-ktx:$ktxVersion",
             viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
-            liveData: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+            liveData: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            navigationFragment: "androidx.navigation:navigation-fragment-ktx:$navVersion",
+            navigationUI: "androidx.navigation:navigation-ui-ktx:$navVersion"
+
     ]
 
     testLibs = [
