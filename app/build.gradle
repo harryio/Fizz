@@ -48,6 +48,7 @@ dependencies {
 
     implementation androidLibs.navigationFragment
     implementation androidLibs.navigationUI
+    implementation androidLibs.material
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit

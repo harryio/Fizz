@@ -41,6 +41,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':domain')
     implementation project(path: ':common-feature')
+    implementation project(path: ':common')
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit

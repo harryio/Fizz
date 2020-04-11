@@ -42,6 +42,7 @@ dependencies {
     api androidLibs.viewModel
     api androidLibs.liveData
     api androidLibs.fragment
+    api androidLibs.material
 
     implementation libraries.rxJava
 }
