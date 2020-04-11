@@ -1,6 +1,6 @@
 ext {
     def kotlinVersion = "1.3.61"
-    def rxJavaVersion = "3.0.0"
+    def rxJavaVersion = "2.2.19"
 
     def appCompatVersion = "1.1.0"
     def ktxVersion = "1.0.2"
@@ -13,7 +13,7 @@ ext {
 
     libraries = [
             kotlinStdLib : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
-            rxJava : "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+            rxJava : "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     ]
 
     androidLibs = [

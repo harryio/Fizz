@@ -2,7 +2,7 @@ package com.harryio.fizz.doman
 
 import com.harryio.fizz.common.AuthenticationToken
 import com.harryio.fizz.network.NetworkInteractor
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 interface AuthenticationUseCase {
 

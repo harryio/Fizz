@@ -3,7 +3,7 @@ package com.harryio.fizz.doman
 import com.harryio.fizz.network.ApiErrorResponse
 import com.harryio.fizz.network.ApiResponse
 import com.harryio.fizz.network.ApiSuccessResponse
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 internal fun <T> Single<ApiResponse<T>>.handleResponse(
     successResponseHandler: (response: ApiSuccessResponse<T>) -> T = {

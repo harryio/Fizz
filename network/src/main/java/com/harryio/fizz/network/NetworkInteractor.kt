@@ -3,6 +3,7 @@ package com.harryio.fizz.network
 import com.squareup.moshi.Moshi
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -38,6 +39,7 @@ class NetworkInteractor(private val apiKey: String) {
     }
 
     private val okHttpClient by lazy {
-        OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor(apiKey)).build()
+        OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor(apiKey))
+            .addInterceptor(HttpLoggingInterceptor()).build()
     }
 }

@@ -9,7 +9,7 @@ internal class ApiKeyInterceptor(private val apiKey: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var originalRequest = chain.request()
-        val originalUrl = originalRequest.url()
+        val originalUrl = originalRequest.url
         if (originalRequest.header("Require-Api-Key") == null) {
             val newUrl = originalUrl.newBuilder()
                 .addQueryParameter(API_KEY_QUERY_PARAM, apiKey)
