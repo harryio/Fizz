@@ -46,6 +46,7 @@ dependencies {
     implementation androidLibs.appCompat
     implementation androidLibs.ktx
 
+    implementation androidLibs.navigationRuntime
     implementation androidLibs.navigationFragment
     implementation androidLibs.navigationUI
     implementation androidLibs.material

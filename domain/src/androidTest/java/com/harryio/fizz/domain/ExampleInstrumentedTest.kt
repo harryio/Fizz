@@ -1,4 +1,4 @@
-package com.harryio.fizz.doman
+package com.harryio.fizz.domain
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
