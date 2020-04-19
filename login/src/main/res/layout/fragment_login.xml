@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -33,13 +34,15 @@
             android:id="@+id/password_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password">
+            android:hint="@string/password"
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_m" />
+                android:layout_marginTop="@dimen/padding_m"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

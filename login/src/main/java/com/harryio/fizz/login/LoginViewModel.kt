@@ -98,7 +98,7 @@ internal class LoginViewModel : BaseViewModel() {
     private fun createSession(requestToken: String) {
         loginResource.value = Resource.loading()
         disposables.add(
-            authenticationUseCase.createSessionToken(requestToken)
+            authenticationUseCase.createSession(requestToken)
                 .subscribe({
                     createSessionResource.postValue(Resource.success(it))
                 }, { throwable ->
