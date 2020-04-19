@@ -48,6 +48,7 @@ dependencies {
     api androidLibs.navigationRuntime
     api androidLibs.navigationFragment
     api androidLibs.navigationUI
+    api androidLibs.sharedPref
 
     implementation libraries.rxJava
 }

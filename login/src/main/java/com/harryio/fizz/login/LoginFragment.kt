@@ -7,15 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.harryio.fizz.common.KEY_SESSION_ID
 import com.harryio.fizz.common_feature.EventObserver
+import com.harryio.fizz.common_feature.savePrefString
 import com.harryio.fizz.login.databinding.FragmentLoginBinding
 
 const val LOGIN_DEEPLINK = "harryio://fizz.authentication/allow"
 
 class LoginFragment : Fragment() {
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by activityViewModels<LoginViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,5 +44,9 @@ class LoginFragment : Fragment() {
                     )
                 )
             })
+
+        viewModel.sessionIdLiveData.observe(viewLifecycleOwner, EventObserver {
+            savePrefString(KEY_SESSION_ID, it)
+        })
     }
 }
