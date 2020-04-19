@@ -18,10 +18,15 @@ private const val KEY_APPROVED = "approved"
 
 internal class LoginViewModel : BaseViewModel() {
 
-    private val loginResource: MutableLiveData<Resource<String>> = MutableLiveData(Resource.empty())
+    private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val loginObserver =
+        getApiCallObserver<String> { _openUrl.value = Event(String.format(AUTHENTICATION_URL, it)) }
 
-    private val createSessionResource: MutableLiveData<Resource<String>> =
-        MutableLiveData(Resource.empty())
+    private val createSessionResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val createSessionObserver = getApiCallObserver<String> {
+        _sessionIdLiveData.value = Event(it)
+        _loginCompleteLiveData.value = Event(Unit)
+    }
 
     val loginButtonEnabled: LiveData<Boolean>
         get() = _loginButtonEnabled
@@ -30,8 +35,6 @@ internal class LoginViewModel : BaseViewModel() {
     val loginButtonText: LiveData<Int>
         get() = _loginButtonText
     private val _loginButtonText = MutableLiveData(R.string.login)
-
-    private val apiCallLiveData = MediatorLiveData<Any>()
 
     private val _openUrl = MutableLiveData<Event<String>>()
     internal val openUrl: LiveData<Event<String>>
@@ -56,13 +59,8 @@ internal class LoginViewModel : BaseViewModel() {
     private val formWatcher = MediatorLiveData<String>()
 
     init {
-        apiCallLiveData.addSource(
-            loginResource,
-            getApiCallObserver { _openUrl.value = Event(String.format(AUTHENTICATION_URL, it)) })
-        apiCallLiveData.addSource(createSessionResource, getApiCallObserver {
-            _sessionIdLiveData.value = Event(it)
-            _loginCompleteLiveData.value = Event(Unit)
-        })
+        loginResource.observeForever(loginObserver)
+        createSessionResource.observeForever(createSessionObserver)
 
         val formValidator: Observer<String> = Observer {
             _loginButtonEnabled.value =
@@ -75,8 +73,8 @@ internal class LoginViewModel : BaseViewModel() {
     override fun onCleared() {
         super.onCleared()
 
-        apiCallLiveData.removeSource(loginResource)
-        apiCallLiveData.removeSource(createSessionResource)
+        loginResource.removeObserver(loginObserver)
+        createSessionResource.removeObserver(createSessionObserver)
         formWatcher.removeSource(username)
         formWatcher.removeSource(password)
     }
@@ -95,6 +93,24 @@ internal class LoginViewModel : BaseViewModel() {
 
 
     fun handleLoginButtonClick() {
+        createSessionResource.value = Resource.loading()
+        disposables.add(authenticationUseCase.getAuthenticationToken()
+            .flatMap {
+                authenticationUseCase.createSession(
+                    username.value!!,
+                    password.value!!,
+                    it.token
+                )
+            }.subscribe({
+                createSessionResource.postValue(Resource.success(it))
+            }, {
+                createSessionResource.postValue(Resource.error(it))
+            })
+        )
+    }
+
+    //TODO Implement
+    private fun handleTmdbLoginButtonClick() {
         loginResource.value = Resource.loading()
         disposables.add(
             authenticationUseCase.getAuthenticationToken()
@@ -110,7 +126,7 @@ internal class LoginViewModel : BaseViewModel() {
     }
 
     private fun createSession(requestToken: String) {
-        loginResource.value = Resource.loading()
+        createSessionResource.value = Resource.loading()
         disposables.add(
             authenticationUseCase.createSession(requestToken)
                 .subscribe({
