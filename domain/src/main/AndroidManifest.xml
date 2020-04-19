@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.harryio.fizz.doman" />
+    package="com.harryio.fizz.domain" />

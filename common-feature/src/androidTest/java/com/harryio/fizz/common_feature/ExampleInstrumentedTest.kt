@@ -1,4 +1,4 @@
-package com.harryio.fizz.doman
+package com.harryio.fizz.common_feature
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.harryio.fizz.doman.test", appContext.packageName)
+        assertEquals("com.harryio.fizz.common_feature.test", appContext.packageName)
     }
 }

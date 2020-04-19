@@ -1,4 +1,4 @@
-package com.harryio.fizz.doman
+package com.harryio.fizz.login
 
 import org.junit.Test
 
