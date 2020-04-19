@@ -50,6 +50,11 @@ internal class LoginViewModel : BaseViewModel() {
     internal val approvedKey
         get() = KEY_APPROVED
 
+    val username = MutableLiveData("")
+    val password = MutableLiveData("")
+
+    private val formWatcher = MediatorLiveData<String>()
+
     init {
         apiCallLiveData.addSource(
             loginResource,
@@ -58,6 +63,13 @@ internal class LoginViewModel : BaseViewModel() {
             _sessionIdLiveData.value = Event(it)
             _loginCompleteLiveData.value = Event(Unit)
         })
+
+        val formValidator: Observer<String> = Observer {
+            _loginButtonEnabled.value =
+                !username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
+        }
+        formWatcher.addSource(username, formValidator)
+        formWatcher.addSource(password, formValidator)
     }
 
     override fun onCleared() {
@@ -65,6 +77,8 @@ internal class LoginViewModel : BaseViewModel() {
 
         apiCallLiveData.removeSource(loginResource)
         apiCallLiveData.removeSource(createSessionResource)
+        formWatcher.removeSource(username)
+        formWatcher.removeSource(password)
     }
 
     fun handleLoginDeeplinkResponse(approved: Boolean?, requestToken: String?) {
@@ -111,7 +125,8 @@ internal class LoginViewModel : BaseViewModel() {
         crossinline successAction: (T) -> Unit
     ): Observer<Resource<T>> = Observer {
         val status = it.status
-        _loginButtonEnabled.value = status != Status.LOADING
+        _loginButtonEnabled.value =
+            (status != Status.LOADING) && !username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
         _loginButtonText.value = if (status == Status.LOADING) {
             R.string.logging_in
         } else {
