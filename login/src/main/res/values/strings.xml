@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">Login</string>
+    <string name="logging_in">Logging in…</string>
+
+    <string name="login_success">Successfully logged in</string>
+    <string name="login_not_approved">Login Not Approved</string>
+    <string name="login_failed">Login failed</string>
+</resources>

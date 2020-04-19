@@ -1,7 +1,7 @@
 package com.harryio.fizz.network
 
 import com.squareup.moshi.Types
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Response
