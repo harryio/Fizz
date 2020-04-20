@@ -109,8 +109,7 @@ internal class LoginViewModel : BaseViewModel() {
         )
     }
 
-    //TODO Implement
-    private fun handleTmdbLoginButtonClick() {
+    fun handleTmdbLoginButtonClick() {
         loginResource.value = Resource.loading()
         disposables.add(
             authenticationUseCase.getAuthenticationToken()

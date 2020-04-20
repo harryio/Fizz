@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/size_s"
+        android:textAppearance="?textAppearanceHeadline6"
         android:text="@string/loading" />
 
 </LinearLayout>
