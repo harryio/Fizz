@@ -1,6 +1,7 @@
 package com.harryio.fizz.network
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -32,7 +33,8 @@ data class ApiSuccessResponse<T>(val body: T?) : ApiResponse<T>()
 data class ApiErrorResponse<T>(val errorStatusCode: Int?, val networkStatusCode: Int?) :
     ApiResponse<T>()
 
-private data class ErrorResponse(@Json(name = "status_code") val statusCode: Int)
+@JsonClass(generateAdapter = true)
+internal data class ErrorResponse(@Json(name = "status_code") val statusCode: Int)
 
 private fun parseErrorStatusCode(response: String?): Int? = if (response == null) {
     null

@@ -5,8 +5,8 @@ import com.harryio.fizz.network.request.CreateSessionWithCredentialsRequest
 import com.harryio.fizz.network.response.AuthenticationTokenResponse
 import com.harryio.fizz.network.response.SessionResponse
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -20,5 +20,5 @@ interface MovieService {
 
     @POST("/3/authentication/token/validate_with_login")
     @Headers("Use-Https: true")
-    fun createSession(createSessionRequest: CreateSessionWithCredentialsRequest): Single<ApiResponse<SessionResponse>>
+    fun createSession(@Body createSessionRequest: CreateSessionWithCredentialsRequest): Single<ApiResponse<SessionResponse>>
 }

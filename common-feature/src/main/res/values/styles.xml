@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MaterialAlertDialog.Loading" parent="MaterialAlertDialog.MaterialComponents">
+    <style name="ThemeOverlay.Fizz.Loading" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.Fizz.Loading</item>
+        <item name="android:windowMinWidthMinor">47%</item>
+    </style>
 
+    <style name="MaterialAlertDialog.Fizz.Loading" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.Loading</item>
     </style>
 
     <style name="ShapeAppearance.Loading" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/size_l</item>
+        <item name="cornerSize">@dimen/size_m</item>
     </style>
 
 </resources>

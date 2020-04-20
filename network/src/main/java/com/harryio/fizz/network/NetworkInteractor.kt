@@ -40,7 +40,7 @@ class NetworkInteractor(private val apiKey: String) {
 
     private val okHttpClient by lazy {
         OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor(apiKey))
-            .addInterceptor(HttpLoggingInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) })
             .addInterceptor(UrlSchemeInterceptor)
             .build()
     }

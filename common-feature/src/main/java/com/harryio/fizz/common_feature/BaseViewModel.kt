@@ -22,6 +22,10 @@ open class BaseViewModel : ViewModel() {
 
     protected fun getNetworkExceptionHandler(defaultErrorId: Int = R.string.error_generic): (Throwable) -> Unit =
         { throwable: Throwable ->
+            if (BuildConfig.DEBUG) {
+                throwable.printStackTrace()
+            }
+
             _errorMsgLiveData.value =
                 Event((throwable as? FizzNetworkException)?.errorResId ?: defaultErrorId)
         }

@@ -28,9 +28,9 @@ internal class LoginViewModel : BaseViewModel() {
         _loginCompleteLiveData.value = Event(Unit)
     }
 
+    private val _loginButtonEnabled = MediatorLiveData<Boolean>()
     val loginButtonEnabled: LiveData<Boolean>
         get() = _loginButtonEnabled
-    private val _loginButtonEnabled = MutableLiveData(true)
 
     private val _openUrl = MutableLiveData<Event<String>>()
     internal val openUrl: LiveData<Event<String>>
@@ -56,7 +56,6 @@ internal class LoginViewModel : BaseViewModel() {
     val username = MutableLiveData("")
     val password = MutableLiveData("")
 
-    private val formWatcher = MediatorLiveData<String>()
 
     init {
         loginResource.observeForever(loginObserver)
@@ -66,8 +65,8 @@ internal class LoginViewModel : BaseViewModel() {
             _loginButtonEnabled.value =
                 !username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
         }
-        formWatcher.addSource(username, formValidator)
-        formWatcher.addSource(password, formValidator)
+        _loginButtonEnabled.addSource(username, formValidator)
+        _loginButtonEnabled.addSource(password, formValidator)
     }
 
     override fun onCleared() {
@@ -75,8 +74,8 @@ internal class LoginViewModel : BaseViewModel() {
 
         loginResource.removeObserver(loginObserver)
         createSessionResource.removeObserver(createSessionObserver)
-        formWatcher.removeSource(username)
-        formWatcher.removeSource(password)
+        _loginButtonEnabled.removeSource(username)
+        _loginButtonEnabled.removeSource(password)
     }
 
     fun handleLoginDeeplinkResponse(approved: Boolean?, requestToken: String?) {

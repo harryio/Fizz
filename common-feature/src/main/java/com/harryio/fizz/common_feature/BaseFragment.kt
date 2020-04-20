@@ -10,7 +10,7 @@ open class BaseFragment : Fragment() {
     internal val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext().applicationContext) }
 
     private val loadingDialog by lazy {
-        MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Loading)
+        MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_Fizz_Loading)
             .setCancelable(false)
             .setView(R.layout.dialog_loading)
             .show()

@@ -8,5 +8,5 @@
     <dimen name="size_xl">24dp</dimen>
     <dimen name="size_xxl">32dp</dimen>
 
-    <dimen name="loading_dialog_size">72dp</dimen>
+    <dimen name="loading_dialog_size">64dp</dimen>
 </resources>
