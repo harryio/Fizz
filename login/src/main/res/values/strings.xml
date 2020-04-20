@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="login">Login</string>
-    <string name="logging_in">Logging in…</string>
 
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -9,4 +8,6 @@
     <string name="login_success">Successfully logged in</string>
     <string name="login_not_approved">Login Not Approved</string>
     <string name="login_failed">Login failed</string>
+    
+    <string name="tmdb_login">TMDB Login</string>
 </resources>

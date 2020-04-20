@@ -32,10 +32,6 @@ internal class LoginViewModel : BaseViewModel() {
         get() = _loginButtonEnabled
     private val _loginButtonEnabled = MutableLiveData(true)
 
-    val loginButtonText: LiveData<Int>
-        get() = _loginButtonText
-    private val _loginButtonText = MutableLiveData(R.string.login)
-
     private val _openUrl = MutableLiveData<Event<String>>()
     internal val openUrl: LiveData<Event<String>>
         get() = _openUrl
@@ -47,6 +43,10 @@ internal class LoginViewModel : BaseViewModel() {
     private val _loginCompleteLiveData = MutableLiveData<Event<Unit>>()
     internal val loginCompleteLiveData: LiveData<Event<Unit>>
         get() = _loginCompleteLiveData
+
+    private val _showLoader = MutableLiveData<Boolean>(false)
+    internal val showLoader: LiveData<Boolean>
+        get() = _showLoader
 
     internal val requestTokenKey
         get() = KEY_REQUEST_TOKEN
@@ -141,13 +141,7 @@ internal class LoginViewModel : BaseViewModel() {
         crossinline successAction: (T) -> Unit
     ): Observer<Resource<T>> = Observer {
         val status = it.status
-        _loginButtonEnabled.value =
-            (status != Status.LOADING) && !username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
-        _loginButtonText.value = if (status == Status.LOADING) {
-            R.string.logging_in
-        } else {
-            R.string.login
-        }
+        _showLoader.value = status == Status.LOADING
 
         when (status) {
             Status.ERROR -> getNetworkExceptionHandler()(it.throwable!!)
