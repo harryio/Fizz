@@ -2,6 +2,8 @@
 <resources>
     <string name="login">Login</string>
 
+    <string name="login_header">Login to your TMDB account</string>
+
     <string name="username">Username</string>
     <string name="password">Password</string>
 
