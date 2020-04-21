@@ -11,9 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fizz">
 
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="singleInstance">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,9 +29,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="harryio" />
-                <data android:host="fizz.authentication" />
-                <data android:pathPrefix="/allow" />
+                <data android:scheme="harryio"
+                    android:host="fizz.authentication"
+                    android:pathPrefix="/allow" />
 
             </intent-filter>
 

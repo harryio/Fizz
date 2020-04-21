@@ -78,18 +78,13 @@ internal class LoginViewModel : BaseViewModel() {
         _loginButtonEnabled.removeSource(password)
     }
 
-    fun handleLoginDeeplinkResponse(approved: Boolean?, requestToken: String?) {
-        if (approved == true) {
-            if (requestToken.isNullOrEmpty()) {
-                _errorMsgLiveData.value = Event(R.string.login_failed)
-            } else {
-                createSession(requestToken)
-            }
+    fun handleLoginDeeplinkResponse(approved: Boolean, requestToken: String) {
+        if (approved) {
+            createSession(requestToken)
         } else {
             _errorMsgLiveData.value = Event(R.string.login_not_approved)
         }
     }
-
 
     fun handleLoginButtonClick() {
         createSessionResource.value = Resource.loading()

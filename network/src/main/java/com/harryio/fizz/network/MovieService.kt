@@ -16,7 +16,7 @@ interface MovieService {
     fun createAuthenticationToken(): Single<ApiResponse<AuthenticationTokenResponse>>
 
     @POST("/3/authentication/session/new")
-    fun createSession(createSessionRequest: CreateSessionRequest): Single<ApiResponse<SessionResponse>>
+    fun createSession(@Body createSessionRequest: CreateSessionRequest): Single<ApiResponse<SessionResponse>>
 
     @POST("/3/authentication/token/validate_with_login")
     @Headers("Use-Https: true")
