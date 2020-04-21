@@ -36,7 +36,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api libraries.kotlinStdLib
-    implementation project(path: ':common')
+    api project(path: ':domain')
+    api project(path: ':common')
+    api project(path: ':theming')
 
     api androidLibs.appCompat
     api androidLibs.ktx
@@ -49,6 +51,7 @@ dependencies {
     api androidLibs.navigationFragment
     api androidLibs.navigationUI
     api androidLibs.sharedPref
+    api androidLibs.constraintLayout
 
     implementation libraries.rxJava
 }

@@ -18,20 +18,19 @@ private const val KEY_APPROVED = "approved"
 
 internal class LoginViewModel : BaseViewModel() {
 
-    private val loginResource: MutableLiveData<Resource<String>> = MutableLiveData(Resource.empty())
+    private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val loginObserver =
+        getApiCallObserver<String> { _openUrl.value = Event(String.format(AUTHENTICATION_URL, it)) }
 
-    private val createSessionResource: MutableLiveData<Resource<String>> =
-        MutableLiveData(Resource.empty())
+    private val createSessionResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val createSessionObserver = getApiCallObserver<String> {
+        _sessionIdLiveData.value = Event(it)
+        _loginCompleteLiveData.value = Event(Unit)
+    }
 
+    private val _loginButtonEnabled = MediatorLiveData<Boolean>()
     val loginButtonEnabled: LiveData<Boolean>
         get() = _loginButtonEnabled
-    private val _loginButtonEnabled = MutableLiveData(true)
-
-    val loginButtonText: LiveData<Int>
-        get() = _loginButtonText
-    private val _loginButtonText = MutableLiveData(R.string.login)
-
-    private val apiCallLiveData = MediatorLiveData<Any>()
 
     private val _openUrl = MutableLiveData<Event<String>>()
     internal val openUrl: LiveData<Event<String>>
@@ -45,42 +44,66 @@ internal class LoginViewModel : BaseViewModel() {
     internal val loginCompleteLiveData: LiveData<Event<Unit>>
         get() = _loginCompleteLiveData
 
+    private val _showLoader = MutableLiveData<Boolean>(false)
+    internal val showLoader: LiveData<Boolean>
+        get() = _showLoader
+
     internal val requestTokenKey
         get() = KEY_REQUEST_TOKEN
     internal val approvedKey
         get() = KEY_APPROVED
 
+    val username = MutableLiveData("")
+    val password = MutableLiveData("")
+
+
     init {
-        apiCallLiveData.addSource(
-            loginResource,
-            getApiCallObserver { _openUrl.value = Event(String.format(AUTHENTICATION_URL, it)) })
-        apiCallLiveData.addSource(createSessionResource, getApiCallObserver {
-            _sessionIdLiveData.value = Event(it)
-            _loginCompleteLiveData.value = Event(Unit)
-        })
+        loginResource.observeForever(loginObserver)
+        createSessionResource.observeForever(createSessionObserver)
+
+        val formValidator: Observer<String> = Observer {
+            _loginButtonEnabled.value =
+                !username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
+        }
+        _loginButtonEnabled.addSource(username, formValidator)
+        _loginButtonEnabled.addSource(password, formValidator)
     }
 
     override fun onCleared() {
         super.onCleared()
 
-        apiCallLiveData.removeSource(loginResource)
-        apiCallLiveData.removeSource(createSessionResource)
+        loginResource.removeObserver(loginObserver)
+        createSessionResource.removeObserver(createSessionObserver)
+        _loginButtonEnabled.removeSource(username)
+        _loginButtonEnabled.removeSource(password)
     }
 
-    fun handleLoginDeeplinkResponse(approved: Boolean?, requestToken: String?) {
-        if (approved == true) {
-            if (requestToken.isNullOrEmpty()) {
-                _errorMsgLiveData.value = Event(R.string.login_failed)
-            } else {
-                createSession(requestToken)
-            }
+    fun handleLoginDeeplinkResponse(approved: Boolean, requestToken: String) {
+        if (approved) {
+            createSession(requestToken)
         } else {
             _errorMsgLiveData.value = Event(R.string.login_not_approved)
         }
     }
 
-
     fun handleLoginButtonClick() {
+        createSessionResource.value = Resource.loading()
+        disposables.add(authenticationUseCase.getAuthenticationToken()
+            .flatMap {
+                authenticationUseCase.createSession(
+                    username.value!!,
+                    password.value!!,
+                    it.token
+                )
+            }.subscribe({
+                createSessionResource.postValue(Resource.success(it))
+            }, {
+                createSessionResource.postValue(Resource.error(it))
+            })
+        )
+    }
+
+    fun handleTmdbLoginButtonClick() {
         loginResource.value = Resource.loading()
         disposables.add(
             authenticationUseCase.getAuthenticationToken()
@@ -96,9 +119,9 @@ internal class LoginViewModel : BaseViewModel() {
     }
 
     private fun createSession(requestToken: String) {
-        loginResource.value = Resource.loading()
+        createSessionResource.value = Resource.loading()
         disposables.add(
-            authenticationUseCase.createSessionToken(requestToken)
+            authenticationUseCase.createSession(requestToken)
                 .subscribe({
                     createSessionResource.postValue(Resource.success(it))
                 }, { throwable ->
@@ -111,12 +134,7 @@ internal class LoginViewModel : BaseViewModel() {
         crossinline successAction: (T) -> Unit
     ): Observer<Resource<T>> = Observer {
         val status = it.status
-        _loginButtonEnabled.value = status != Status.LOADING
-        _loginButtonText.value = if (status == Status.LOADING) {
-            R.string.logging_in
-        } else {
-            R.string.login
-        }
+        _showLoader.value = status == Status.LOADING
 
         when (status) {
             Status.ERROR -> getNetworkExceptionHandler()(it.throwable!!)

@@ -34,7 +34,7 @@ class AuthenticationViewModel : BaseViewModel() {
             if (requestToken.isNullOrEmpty()) {
                 showError(null)
             } else {
-                authenticationUseCase.createSessionToken(requestToken)
+                authenticationUseCase.createSession(requestToken)
 
             }
         } else {
@@ -43,7 +43,7 @@ class AuthenticationViewModel : BaseViewModel() {
     }
 
     private fun createSession(requestToken: String) {
-        disposables.add(authenticationUseCase.createSessionToken(requestToken)
+        disposables.add(authenticationUseCase.createSession(requestToken)
             .doOnSuccess { _sessionIdLiveData.postValue(it) }
             .ignoreElement()
             .subscribe({

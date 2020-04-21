@@ -3,6 +3,7 @@
     <string name="error_duplicated_entry">Duplicate entry: The data you tried to submit already exists</string>
     <string name="error_service_offline">Service offline: This service is temporarily offline, try again later</string>
     <string name="error_authentication_failed">Authentication failed</string>
+    <string name="error_invalid_login_credentials">Invalid username and/or password: You did not provide a valid login</string>
     <string name="error_account_disabled">Account disabled: Your account is no longer active. Contact TMDb if this is an error</string>
     <string name="error_account_not_verified">Email not verified: Your email address has not been verified</string>
     <string name="error_invalid_request_token">Invalid request token: The request token is either expired or invalid. Please login again</string>

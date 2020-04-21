@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Fizz.Subtitle1" parent="@style/TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:fontFamily">@font/fira_sans_extra_condensed</item>
+        <item name="fontFamily">@font/fira_sans_extra_condensed</item>
+    </style>
+
+    <style name="TextAppearance.Fizz.Subtitle2" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:fontFamily">@font/fira_sans_extra_condensed_medium</item>
+        <item name="fontFamily">@font/fira_sans_extra_condensed_medium</item>
+    </style>
+    
+    <style name="TextAppearance.Fizz.Body1" parent="@style/TextAppearance.MaterialComponents.Body1">
+        <item name="android:fontFamily">@font/fira_sans_extra_condensed</item>
+        <item name="fontFamily">@font/fira_sans_extra_condensed</item>
+    </style>
+
+    <style name="TextAppearance.Fizz.Caption" parent="@style/TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/fira_sans_extra_condensed</item>
+        <item name="fontFamily">@font/fira_sans_extra_condensed</item>
+    </style>
+
+    <style name="TextAppearance.Fizz.Button" parent="@style/TextAppearance.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/fira_sans_extra_condensed_medium</item>
+        <item name="fontFamily">@font/fira_sans_extra_condensed_medium</item>
+    </style>
+</resources>

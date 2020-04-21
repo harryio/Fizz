@@ -41,6 +41,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':login')
+    implementation project(path: ':theming')
 
     implementation libraries.kotlinStdLib
     implementation androidLibs.appCompat
@@ -49,10 +51,8 @@ dependencies {
     implementation androidLibs.navigationRuntime
     implementation androidLibs.navigationFragment
     implementation androidLibs.navigationUI
-    implementation androidLibs.material
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit
     androidTestImplementation androidTestLibs.espresso
-    implementation project(path: ':login')
 }

@@ -10,6 +10,7 @@ internal fun <T> ApiErrorResponse<T>.errorMsgResId(): Int? = when (errorStatusCo
     8 -> R.string.error_duplicated_entry
     9 -> R.string.error_service_offline
     14 -> R.string.error_authentication_failed
+    30 -> R.string.error_invalid_login_credentials
     31 -> R.string.error_account_disabled
     32 -> R.string.error_account_not_verified
     33 -> R.string.error_invalid_request_token
