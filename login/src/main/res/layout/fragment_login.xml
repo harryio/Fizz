@@ -19,9 +19,9 @@
             android:id="@+id/login_header_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_s"
             android:text="@string/login_header"
             android:textAppearance="?textAppearanceSubtitle1"
-            android:layout_marginBottom="@dimen/size_s"
             app:layout_constraintBottom_toTopOf="@id/login_header_divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -89,19 +89,33 @@
             android:enabled="@{model.loginButtonEnabled}"
             android:onClick="@{() -> model.handleLoginButtonClick()}"
             android:text="@string/login"
-            app:layout_constraintBottom_toTopOf="@id/tmdb_login_button"
+            app:layout_constraintBottom_toTopOf="@id/or_label"
             app:layout_constraintTop_toBottomOf="@id/password_til" />
+
+        <TextView
+            android:id="@+id/or_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_m"
+            android:text="@string/or"
+            android:textAllCaps="true"
+            android:textAppearance="?textAppearanceSubtitle2"
+            app:layout_constraintBottom_toTopOf="@id/tmdb_login_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tmdb_login_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_m"
             android:onClick="@{() -> model.handleTmdbLoginButtonClick()}"
             android:text="@string/tmdb_login"
+            app:backgroundTint="@color/tmdb_light_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_button" />
+            app:layout_constraintTop_toBottomOf="@id/or_label" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

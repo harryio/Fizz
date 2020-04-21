@@ -10,6 +10,7 @@
     <string name="login_success">Successfully logged in</string>
     <string name="login_not_approved">Login Not Approved</string>
     <string name="login_failed">Login failed</string>
-    
-    <string name="tmdb_login">TMDB Login</string>
+
+    <string name="or">Or</string>
+    <string name="tmdb_login">Login on TMDB</string>
 </resources>
