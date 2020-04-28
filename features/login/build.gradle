@@ -1,23 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
 
-
     defaultConfig {
-        applicationId "com.harryio.fizz"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "API_KEY", "${tmdb_api_key}")
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -43,19 +39,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':features:login')
-    implementation project(path: ':theming')
+    api project(path: ':features:common-feature')
+    api project(path: ':repositories:authenticationrepository')
 
-    implementation libraries.kotlinStdLib
     implementation libraries.dagger
-
-    implementation androidLibs.appCompat
-    implementation androidLibs.ktx
-
-    implementation androidLibs.navigationRuntime
-    implementation androidLibs.navigationFragment
-    implementation androidLibs.navigationUI
-
     kapt libraries.daggerCompiler
 
     testImplementation testLibs.jUnit
