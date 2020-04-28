@@ -44,7 +44,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':features:login')
-    implementation project(path: ':theming')
 
     implementation libraries.kotlinStdLib
     implementation libraries.dagger
