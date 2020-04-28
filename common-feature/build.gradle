@@ -36,7 +36,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api libraries.kotlinStdLib
-    api project(path: ':domain')
+    api project(path: ':common-repository')
     api project(path: ':common')
     api project(path: ':theming')
 

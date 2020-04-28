@@ -3,7 +3,6 @@ package com.harryio.fizz.authenticationrepository
 import com.harryio.fizz.common.AuthenticationToken
 import com.harryio.fizz.domain.handleResponse
 import io.reactivex.Single
-import javax.inject.Inject
 
 interface AuthenticationRepository {
     fun getAuthenticationToken(): Single<AuthenticationToken>
@@ -13,7 +12,7 @@ interface AuthenticationRepository {
     fun createSession(username: String, password: String, requestToken: String): Single<String>
 }
 
-internal class AuthenticationRepositoryImpl @Inject constructor(private val authenticationService: AuthenticationService) :
+internal class AuthenticationRepositoryImpl constructor(private val authenticationService: AuthenticationService) :
     AuthenticationRepository {
 
     override fun getAuthenticationToken(): Single<AuthenticationToken> =

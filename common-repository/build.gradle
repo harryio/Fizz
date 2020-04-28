@@ -36,12 +36,16 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':network')
-    implementation project(path: ':common')
+    api project(path: ':network')
+    api project(path: ':common')
 
-    implementation libraries.kotlinStdLib
+    api libraries.kotlinStdLib
     api libraries.rxJava
+    api libraries.dagger
+    api libraries.moshi
+    api libraries.rxJava
+    api libraries.retrofit
 
-    implementation libraries.dagger
     kapt libraries.daggerCompiler
+    kapt libraries.moshiCodeGen
 }

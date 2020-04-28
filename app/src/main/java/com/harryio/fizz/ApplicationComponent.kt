@@ -1,5 +1,6 @@
 package com.harryio.fizz
 
+import com.harryio.fizz.authenticationrepository.AuthenticationModule
 import com.harryio.fizz.login.LoginComponent
 import com.harryio.fizz.login.LoginModule
 import com.harryio.fizz.network.ApiKey
@@ -8,7 +9,7 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [NetworkModule::class, LoginModule::class])
+@Component(modules = [NetworkModule::class, AuthenticationModule::class, LoginModule::class])
 @Singleton
 interface ApplicationComponent {
 

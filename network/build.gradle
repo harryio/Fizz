@@ -19,7 +19,6 @@ dependencies {
     implementation libraries.retrofitRxJavaAdapter
     implementation libraries.retrofitMoshiConverter
     implementation libraries.networkLogging
-    implementation libraries.rxJava
     implementation libraries.dagger
 
     kapt libraries.daggerCompiler

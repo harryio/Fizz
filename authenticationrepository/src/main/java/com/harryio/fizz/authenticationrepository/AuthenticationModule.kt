@@ -1,36 +1,26 @@
 package com.harryio.fizz.authenticationrepository
 
-import dagger.*
+import dagger.Module
+import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Qualifier
+import javax.inject.Singleton
 
-@Module(
-    subcomponents = [AuthenticationComponent::class],
-    includes = [AuthenticationInternalModule::class]
-)
-object AuthenticationModule
-
-@Subcomponent
-internal interface AuthenticationComponent {
-
-    fun authenticationRepository(): AuthenticationRepository
-
-    @Subcomponent.Factory
-    interface Factory {
-
-        fun create(@BindsInstance retrofit: Retrofit): AuthenticationComponent
-    }
-}
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+private annotation class InternalApi
 
 @Module
-internal abstract class AuthenticationInternalModule {
+object AuthenticationModule {
 
-    @Binds
-    abstract fun bindsAuthenticationRepository(authenticationRepositoryImpl: AuthenticationRepositoryImpl): AuthenticationRepository
+    @Provides
+    @JvmStatic
+    @InternalApi
+    fun providesAuthenticationService(retrofit: Retrofit): AuthenticationService =
+        retrofit.create(AuthenticationService::class.java)
 
-    companion object {
-        @Provides
-        @JvmStatic
-        fun providesAuthenticationService(retrofit: Retrofit): AuthenticationService =
-            retrofit.create(AuthenticationService::class.java)
-    }
+    @Provides
+    @Singleton
+    fun providesAuthenticationRepository(@InternalApi authenticationService: AuthenticationService): AuthenticationRepository =
+        AuthenticationRepositoryImpl(authenticationService)
 }

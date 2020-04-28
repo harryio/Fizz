@@ -1,6 +1,5 @@
 package com.harryio.fizz.login
 
-import com.harryio.fizz.authenticationrepository.AuthenticationModule
 import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import dagger.Module
 import dagger.Subcomponent
@@ -8,7 +7,7 @@ import dagger.Subcomponent
 @Module(subcomponents = [LoginComponent::class])
 object LoginModule
 
-@Subcomponent(modules = [AuthenticationModule::class])
+@Subcomponent
 interface LoginComponent {
 
     fun authenticationRepository(): AuthenticationRepository
