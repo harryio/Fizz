@@ -14,15 +14,16 @@ dependencies {
 
     implementation libraries.kotlinStdLib
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$loggingLibVersion"
-
+    api libraries.moshi
+    api libraries.retrofit
+    implementation libraries.retrofitRxJavaAdapter
+    implementation libraries.retrofitMoshiConverter
+    implementation libraries.networkLogging
     implementation libraries.rxJava
+    implementation libraries.dagger
 
-    implementation "com.squareup.moshi:moshi:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    kapt libraries.daggerCompiler
+    kapt libraries.moshiCodeGen
 }
 
 sourceCompatibility = "8"

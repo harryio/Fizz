@@ -16,6 +16,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "${tmdb_api_key}")
     }
 
     buildTypes {
@@ -45,12 +47,16 @@ dependencies {
     implementation project(path: ':theming')
 
     implementation libraries.kotlinStdLib
+    implementation libraries.dagger
+
     implementation androidLibs.appCompat
     implementation androidLibs.ktx
 
     implementation androidLibs.navigationRuntime
     implementation androidLibs.navigationFragment
     implementation androidLibs.navigationUI
+
+    kapt libraries.daggerCompiler
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit

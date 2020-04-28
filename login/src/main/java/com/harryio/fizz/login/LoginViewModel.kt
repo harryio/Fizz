@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import com.harryio.fizz.common_feature.BaseViewModel
 import com.harryio.fizz.common_feature.Event
 import com.harryio.fizz.domain.Resource
 import com.harryio.fizz.domain.Status
-import com.harryio.fizz.domain.authenticationUseCase
 
 private const val AUTHENTICATION_URL =
     "https://www.themoviedb.org/authenticate/%s?redirect_to=$LOGIN_DEEPLINK"
@@ -17,6 +17,8 @@ private const val KEY_REQUEST_TOKEN = "request_token"
 private const val KEY_APPROVED = "approved"
 
 internal class LoginViewModel : BaseViewModel() {
+
+    internal lateinit var authenticationRepository: AuthenticationRepository
 
     private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
     private val loginObserver =
@@ -44,7 +46,7 @@ internal class LoginViewModel : BaseViewModel() {
     internal val loginCompleteLiveData: LiveData<Event<Unit>>
         get() = _loginCompleteLiveData
 
-    private val _showLoader = MutableLiveData<Boolean>(false)
+    private val _showLoader = MutableLiveData(false)
     internal val showLoader: LiveData<Boolean>
         get() = _showLoader
 
@@ -78,6 +80,7 @@ internal class LoginViewModel : BaseViewModel() {
         _loginButtonEnabled.removeSource(password)
     }
 
+
     fun handleLoginDeeplinkResponse(approved: Boolean, requestToken: String) {
         if (approved) {
             createSession(requestToken)
@@ -88,9 +91,9 @@ internal class LoginViewModel : BaseViewModel() {
 
     fun handleLoginButtonClick() {
         createSessionResource.value = Resource.loading()
-        disposables.add(authenticationUseCase.getAuthenticationToken()
+        disposables.add(authenticationRepository.getAuthenticationToken()
             .flatMap {
-                authenticationUseCase.createSession(
+                authenticationRepository.createSession(
                     username.value!!,
                     password.value!!,
                     it.token
@@ -106,7 +109,7 @@ internal class LoginViewModel : BaseViewModel() {
     fun handleTmdbLoginButtonClick() {
         loginResource.value = Resource.loading()
         disposables.add(
-            authenticationUseCase.getAuthenticationToken()
+            authenticationRepository.getAuthenticationToken()
                 .subscribe(
                     { authenticationToken ->
                         loginResource.postValue(Resource.success(authenticationToken.token))
@@ -121,7 +124,7 @@ internal class LoginViewModel : BaseViewModel() {
     private fun createSession(requestToken: String) {
         createSessionResource.value = Resource.loading()
         disposables.add(
-            authenticationUseCase.createSession(requestToken)
+            authenticationRepository.createSession(requestToken)
                 .subscribe({
                     createSessionResource.postValue(Resource.success(it))
                 }, { throwable ->

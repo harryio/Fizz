@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".FizzApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,9 +30,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="harryio"
+                <data
                     android:host="fizz.authentication"
-                    android:pathPrefix="/allow" />
+                    android:pathPrefix="/allow"
+                    android:scheme="harryio" />
 
             </intent-filter>
 

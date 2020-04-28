@@ -39,7 +39,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':common-feature')
+    api project(path: ':common-feature')
+    api project(path: ':authenticationrepository')
+
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit
