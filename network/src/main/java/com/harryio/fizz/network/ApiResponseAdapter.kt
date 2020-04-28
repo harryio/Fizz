@@ -1,5 +1,6 @@
 package com.harryio.fizz.network
 
+import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import io.reactivex.Single
 import retrofit2.Call
@@ -9,7 +10,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-internal class ApiResponseAdapter : CallAdapter.Factory() {
+internal class ApiResponseAdapter internal constructor(val moshi: Moshi) : CallAdapter.Factory() {
 
     override fun get(
         returnType: Type,
@@ -34,8 +35,8 @@ internal class ApiResponseAdapter : CallAdapter.Factory() {
 
         return object : CallAdapter<Any?, Single<ApiResponse<*>>> {
             override fun adapt(call: Call<Any?>): Single<ApiResponse<*>> {
-                return delegate.adapt(call).map { ApiResponse.create(it) }
-                    .onErrorReturn { ApiResponse.create(it) }
+                return delegate.adapt(call).map { ApiResponse.create(it, moshi) }
+                    .onErrorReturn { ApiResponse.create(it, moshi) }
             }
 
             override fun responseType(): Type {
