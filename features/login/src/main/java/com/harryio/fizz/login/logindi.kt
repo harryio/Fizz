@@ -1,16 +1,16 @@
 package com.harryio.fizz.login
 
-import com.harryio.fizz.authenticationrepository.AuthenticationRepository
+import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Module
 import dagger.Subcomponent
 
 @Module(subcomponents = [LoginComponent::class])
 object LoginModule
 
-@Subcomponent
+@Subcomponent(modules = [LoginAssistedInjectionModule::class])
 interface LoginComponent {
 
-    fun authenticationRepository(): AuthenticationRepository
+    fun loginViewModelFactory(): LoginViewModel.Factory
 
     @Subcomponent.Factory
     interface Factory {
@@ -24,3 +24,7 @@ interface LoginComponentProvider {
     fun provideLoginComponentFactory(): LoginComponent.Factory
 
 }
+
+@AssistedModule
+@Module(includes = [AssistedInject_LoginAssistedInjectionModule::class])
+internal object LoginAssistedInjectionModule

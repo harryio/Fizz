@@ -1,6 +1,5 @@
 package com.harryio.fizz.login
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -50,13 +49,5 @@ class LoginFragment : BaseFragment() {
         })
 
         viewModel.showLoader.observe(viewLifecycleOwner, defaultLoadingObserver)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        val loginComponent = (requireContext().applicationContext as LoginComponentProvider)
-            .provideLoginComponentFactory().create()
-        viewModel.authenticationRepository = loginComponent.authenticationRepository()
     }
 }

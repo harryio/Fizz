@@ -1,14 +1,13 @@
 package com.harryio.fizz.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import com.harryio.fizz.common_feature.BaseViewModel
 import com.harryio.fizz.common_feature.Event
 import com.harryio.fizz.domain.Resource
 import com.harryio.fizz.domain.Status
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 
 private const val AUTHENTICATION_URL =
     "https://www.themoviedb.org/authenticate/%s?redirect_to=$LOGIN_DEEPLINK"
@@ -16,9 +15,17 @@ private const val AUTHENTICATION_URL =
 private const val KEY_REQUEST_TOKEN = "request_token"
 private const val KEY_APPROVED = "approved"
 
-internal class LoginViewModel : BaseViewModel() {
+class LoginViewModel @AssistedInject constructor(
+    private val authenticationRepository: AuthenticationRepository,
+    @Assisted
+    private val savedStateHandle: SavedStateHandle
+) : BaseViewModel() {
 
-    internal lateinit var authenticationRepository: AuthenticationRepository
+    @AssistedInject.Factory
+    interface Factory {
+
+        fun create(savedStateHandle: SavedStateHandle): LoginViewModel
+    }
 
     private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
     private val loginObserver =

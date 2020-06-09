@@ -43,7 +43,10 @@ dependencies {
     api project(path: ':repositories:authenticationrepository')
 
     implementation libraries.dagger
+    compileOnly libraries.assistedInject
+
     kapt libraries.daggerCompiler
+    kapt libraries.assistedInjectCompiler
 
     testImplementation testLibs.jUnit
     androidTestImplementation androidTestLibs.androidJUnit
