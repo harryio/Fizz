@@ -17,6 +17,6 @@ interface AuthenticationService {
 
     @POST("/3/authentication/token/validate_with_login")
     @Headers("Use-Https: true")
-    fun createSession(@Body createSessionRequest: CreateSessionWithCredentialsRequest): Single<ApiResponse<SessionResponse>>
+    fun createSession(@Body createSessionRequest: CreateSessionWithCredentialsRequest): Single<ApiResponse<AuthenticationTokenResponse>>
 
 }

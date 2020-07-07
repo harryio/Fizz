@@ -1,7 +1,9 @@
 package com.harryio.fizz.network
 
 import com.squareup.moshi.Moshi
-import dagger.*
+import dagger.Lazy
+import dagger.Module
+import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,11 +27,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     @InternalApi
     fun moshi(): Moshi = Moshi.Builder().build()
 
     @Provides
     @Singleton
+    @JvmStatic
     @InternalApi
     fun okHttpClient(@ApiKey apiKey: String): OkHttpClient =
         OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor(apiKey))
@@ -39,6 +43,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     fun retrofit(
         @InternalApi okHttpClient: Lazy<OkHttpClient>,
         @InternalApi moshi: Moshi

@@ -10,16 +10,18 @@ import com.harryio.fizz.common_feature.activitySavedStateViewModels
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var loginComponent: LoginComponent
+
     private val viewModel by activitySavedStateViewModels { handle ->
-        val loginComponent =
-            (applicationContext as LoginComponentProvider).provideLoginComponentFactory()
-                .create()
         loginComponent.loginViewModelFactory().create(handle)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        loginComponent =
+            (applicationContext as LoginComponentProvider).provideLoginComponentFactory().create()
 
         viewModel.errorMsgLiveData.observe(this, EventObserver {
             Snackbar.make(findViewById(R.id.fragment_container_view), it, Snackbar.LENGTH_SHORT)

@@ -105,7 +105,11 @@ class LoginViewModel @AssistedInject constructor(
                     password.value!!,
                     it.token
                 )
-            }.subscribe({
+            }
+            .flatMap {
+                authenticationRepository.createSession(it)
+            }
+            .subscribe({
                 createSessionResource.postValue(Resource.success(it))
             }, {
                 createSessionResource.postValue(Resource.error(it))

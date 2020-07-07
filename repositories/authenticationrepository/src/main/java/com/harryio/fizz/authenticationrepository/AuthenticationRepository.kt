@@ -15,11 +15,11 @@ interface AuthenticationRepository {
 internal class AuthenticationRepositoryImpl constructor(private val authenticationService: AuthenticationService) :
     AuthenticationRepository {
 
-    override fun getAuthenticationToken(): Single<AuthenticationToken> =
+    override fun getAuthenticationToken() =
         authenticationService.createAuthenticationToken().handleResponse()
             .map { AuthenticationToken(it.requestToken) }
 
-    override fun createSession(requestToken: String): Single<String> =
+    override fun createSession(requestToken: String) =
         authenticationService.createSession(CreateSessionRequest(requestToken)).handleResponse()
             .map { it.sessionId }
 
@@ -32,6 +32,5 @@ internal class AuthenticationRepositoryImpl constructor(private val authenticati
             )
         )
             .handleResponse()
-            .map { it.sessionId }
-
+            .map { it.requestToken }
 }

@@ -25,7 +25,8 @@ inline fun <T> Single<ApiResponse<T>>.handleResponse(
     crossinline errorResponseHandler: (response: ApiErrorResponse<T>) -> T = {
         throw FizzNetworkException(
             it.errorMsgResId(),
-            it.networkStatusCode
+            it.networkStatusCode,
+            it.cause
         )
     }
 ): Single<T> {

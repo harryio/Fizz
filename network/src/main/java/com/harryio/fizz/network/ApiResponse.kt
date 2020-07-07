@@ -16,7 +16,7 @@ sealed class ApiResponse<T> {
                     moshi
                 )
             val networkStatusCode = (error as? HttpException)?.code()
-            return ApiErrorResponse(errorStatusCode, networkStatusCode)
+                return ApiErrorResponse(errorStatusCode, networkStatusCode, error)
         }
 
         fun <T> create(response: Response<T>, moshi: Moshi): ApiResponse<T> {
@@ -36,7 +36,8 @@ data class ApiSuccessResponse<T> internal constructor(val body: T?) : ApiRespons
 
 data class ApiErrorResponse<T> internal constructor(
     val errorStatusCode: Int?,
-    val networkStatusCode: Int?
+    val networkStatusCode: Int?,
+    val cause: Throwable? = null
 ) :
     ApiResponse<T>()
 
