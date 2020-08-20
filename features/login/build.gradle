@@ -42,13 +42,12 @@ dependencies {
     api project(path: ':features:common-feature')
     api project(path: ':repositories:authenticationrepository')
 
-    implementation libraries.dagger
-    compileOnly libraries.assistedInject
+    implementation dagger.dagger
+    compileOnly dagger.assistedInject
 
-    kapt libraries.daggerCompiler
-    kapt libraries.assistedInjectCompiler
+    kapt compilers.dagger
+    kapt compilers.assistedInject
 
-    testImplementation testLibs.jUnit
-    androidTestImplementation androidTestLibs.androidJUnit
-    androidTestImplementation androidTestLibs.espresso
+    testImplementation testLibs
+    androidTestImplementation androidTestLibs
 }

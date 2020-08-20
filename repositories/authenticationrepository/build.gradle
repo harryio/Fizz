@@ -38,6 +38,6 @@ dependencies {
 
     implementation project(path: ':repositories:common-repository')
 
-    kapt libraries.daggerCompiler
-    kapt libraries.moshiCodeGen
+    kapt compilers.dagger
+    kapt compilers.moshi
 }
