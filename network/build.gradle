@@ -14,8 +14,8 @@ dependencies {
 
     implementation libraries.kotlinStdLib
 
-    api libraries.moshi
-    api libraries.retrofit
+    implementation libraries.moshi
+    implementation libraries.retrofit
     implementation libraries.retrofitRxJavaAdapter
     implementation libraries.retrofitMoshiConverter
     implementation libraries.networkLogging

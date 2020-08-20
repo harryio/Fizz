@@ -65,7 +65,6 @@ class LoginViewModel @AssistedInject constructor(
     val username = MutableLiveData("")
     val password = MutableLiveData("")
 
-
     init {
         loginResource.observeForever(loginObserver)
         createSessionResource.observeForever(createSessionObserver)

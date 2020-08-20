@@ -11,5 +11,5 @@ internal inline fun Retrofit.Builder.callFactory(crossinline body: (Request) -> 
         override fun newCall(request: Request): Call = body(request)
     })
 
-internal fun Retrofit.Builder.delegatingCallFactory(delegate: dagger.Lazy<OkHttpClient>): Retrofit.Builder =
-    callFactory { delegate.get().newCall(it) }
+internal fun Retrofit.Builder.delegatingCallFactory(delegate: Lazy<OkHttpClient>): Retrofit.Builder =
+    callFactory { delegate.value.newCall(it) }

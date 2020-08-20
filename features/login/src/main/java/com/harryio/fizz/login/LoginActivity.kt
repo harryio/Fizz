@@ -20,8 +20,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loginComponent =
-            (applicationContext as LoginComponentProvider).provideLoginComponentFactory().create()
+        loginComponent = DaggerLoginComponent.create()
 
         viewModel.errorMsgLiveData.observe(this, EventObserver {
             Snackbar.make(findViewById(R.id.fragment_container_view), it, Snackbar.LENGTH_SHORT)

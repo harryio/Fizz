@@ -15,43 +15,32 @@ import javax.inject.Singleton
 
 private const val BASE_API_URL = "https://api.themoviedb.org"
 
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class ApiKey
-
-@Qualifier
-internal annotation class InternalApi
-
 @Module
 object NetworkModule {
 
-    @Provides
-    @Singleton
-    @JvmStatic
-    @InternalApi
-    fun moshi(): Moshi = Moshi.Builder().build()
+    private lateinit var apiKey: String
 
-    @Provides
-    @Singleton
-    @JvmStatic
-    @InternalApi
-    fun okHttpClient(@ApiKey apiKey: String): OkHttpClient =
+    fun setup(apiKey: String) {
+        this.apiKey = apiKey
+    }
+
+    private val moshi by lazy {
+        Moshi.Builder().build()
+    }
+
+    private val okHttpClient = lazy {
         OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor(apiKey))
             .addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) })
             .addInterceptor(UrlSchemeInterceptor)
             .build()
+    }
 
-    @Provides
-    @Singleton
-    @JvmStatic
-    fun retrofit(
-        @InternalApi okHttpClient: Lazy<OkHttpClient>,
-        @InternalApi moshi: Moshi
-    ): Retrofit =
+    val retrofit: Retrofit by lazy {
         Retrofit.Builder().baseUrl(BASE_API_URL)
             .delegatingCallFactory(okHttpClient)
             .addCallAdapterFactory(ApiResponseAdapter(moshi))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+    }
 }

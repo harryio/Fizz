@@ -1,20 +1,13 @@
 package com.harryio.fizz
 
 import android.app.Application
-import com.harryio.fizz.login.LoginComponent
-import com.harryio.fizz.login.LoginComponentProvider
+import com.harryio.fizz.network.NetworkModule
 
-class FizzApp : Application(), LoginComponentProvider {
-
-    private lateinit var applicationComponent: ApplicationComponent
+class FizzApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        applicationComponent = DaggerApplicationComponent.factory()
-            .create(BuildConfig.API_KEY)
+        NetworkModule.setup(BuildConfig.API_KEY)
     }
-
-    override fun provideLoginComponentFactory(): LoginComponent.Factory =
-        applicationComponent.loginComponentFactory()
 }

@@ -2,7 +2,9 @@ package com.harryio.fizz.authenticationrepository
 
 import com.harryio.fizz.common.AuthenticationToken
 import com.harryio.fizz.domain.handleResponse
+import dagger.Binds
 import io.reactivex.Single
+import javax.inject.Inject
 
 interface AuthenticationRepository {
     fun getAuthenticationToken(): Single<AuthenticationToken>
