@@ -40,12 +40,10 @@ dependencies {
     api project(path: ':common')
 
     api libraries.kotlinStdLib
-    api libraries.rxJava
-    api libraries.dagger
-    api libraries.moshi
-    api libraries.rxJava
-    api libraries.retrofit
+    api networkLibraries.moshi
+    api networkLibraries.retrofit
 
-    kapt libraries.daggerCompiler
-    kapt libraries.moshiCodeGen
+    api coroutines
+
+    kapt compilers.moshi
 }

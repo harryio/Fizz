@@ -3,18 +3,24 @@ package com.harryio.fizz.login
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.harryio.fizz.common_feature.EventObserver
+import com.harryio.fizz.common_feature.activitySavedStateViewModels
 
 class LoginActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private lateinit var loginComponent: LoginComponent
+
+    private val viewModel by activitySavedStateViewModels { handle ->
+        loginComponent.loginViewModelFactory().create(handle)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        loginComponent = DaggerLoginComponent.create()
 
         viewModel.errorMsgLiveData.observe(this, EventObserver {
             Snackbar.make(findViewById(R.id.fragment_container_view), it, Snackbar.LENGTH_SHORT)

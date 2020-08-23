@@ -1,14 +1,15 @@
 package com.harryio.fizz.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import com.harryio.fizz.common_feature.BaseViewModel
 import com.harryio.fizz.common_feature.Event
 import com.harryio.fizz.domain.Resource
 import com.harryio.fizz.domain.Status
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 private const val AUTHENTICATION_URL =
     "https://www.themoviedb.org/authenticate/%s?redirect_to=$LOGIN_DEEPLINK"
@@ -16,9 +17,18 @@ private const val AUTHENTICATION_URL =
 private const val KEY_REQUEST_TOKEN = "request_token"
 private const val KEY_APPROVED = "approved"
 
-internal class LoginViewModel : BaseViewModel() {
+internal class LoginViewModel @AssistedInject constructor(
+    private val authenticationRepository: AuthenticationRepository,
+    private val coroutineDispatcher: CoroutineDispatcher,
+    @Assisted
+    private val savedStateHandle: SavedStateHandle
+) : BaseViewModel() {
 
-    internal lateinit var authenticationRepository: AuthenticationRepository
+    @AssistedInject.Factory
+    interface Factory {
+
+        fun create(savedStateHandle: SavedStateHandle): LoginViewModel
+    }
 
     private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
     private val loginObserver =
@@ -58,7 +68,6 @@ internal class LoginViewModel : BaseViewModel() {
     val username = MutableLiveData("")
     val password = MutableLiveData("")
 
-
     init {
         loginResource.observeForever(loginObserver)
         createSessionResource.observeForever(createSessionObserver)
@@ -89,48 +98,40 @@ internal class LoginViewModel : BaseViewModel() {
         }
     }
 
-    fun handleLoginButtonClick() {
-        createSessionResource.value = Resource.loading()
-        disposables.add(authenticationRepository.getAuthenticationToken()
-            .flatMap {
-                authenticationRepository.createSession(
-                    username.value!!,
-                    password.value!!,
-                    it.token
-                )
-            }.subscribe({
-                createSessionResource.postValue(Resource.success(it))
-            }, {
-                createSessionResource.postValue(Resource.error(it))
-            })
-        )
+    fun handleLoginButtonClick() = viewModelScope.launch(coroutineDispatcher) {
+        try {
+            createSessionResource.value = Resource.loading()
+            val authenticationToken = authenticationRepository.getAuthenticationToken().token
+            val requestToken = authenticationRepository.createSession(
+                username.value!!,
+                password.value!!,
+                authenticationToken
+            )
+            val sessionId = authenticationRepository.createSession(requestToken)
+            createSessionResource.value = Resource.success(sessionId)
+        } catch (exception: Exception) {
+            createSessionResource.value = Resource.error(exception)
+        }
     }
 
-    fun handleTmdbLoginButtonClick() {
+    fun handleTmdbLoginButtonClick() = viewModelScope.launch(coroutineDispatcher) {
         loginResource.value = Resource.loading()
-        disposables.add(
-            authenticationRepository.getAuthenticationToken()
-                .subscribe(
-                    { authenticationToken ->
-                        loginResource.postValue(Resource.success(authenticationToken.token))
-                    },
-                    { throwable ->
-                        loginResource.postValue(Resource.error(throwable))
-                    }
-                )
-        )
+        try {
+            val authenticationToken = authenticationRepository.getAuthenticationToken()
+            loginResource.value = Resource.success(authenticationToken.token)
+        } catch (exception: Exception) {
+            loginResource.value = Resource.error(exception)
+        }
     }
 
-    private fun createSession(requestToken: String) {
+    private fun createSession(requestToken: String) = viewModelScope.launch(coroutineDispatcher) {
         createSessionResource.value = Resource.loading()
-        disposables.add(
-            authenticationRepository.createSession(requestToken)
-                .subscribe({
-                    createSessionResource.postValue(Resource.success(it))
-                }, { throwable ->
-                    createSessionResource.postValue(Resource.error(throwable))
-                })
-        )
+        try {
+            val sessionId = authenticationRepository.createSession(requestToken)
+            createSessionResource.value = Resource.success(sessionId)
+        } catch (exception: Exception) {
+            createSessionResource.value = Resource.error(exception)
+        }
     }
 
     private inline fun <reified T> getApiCallObserver(
