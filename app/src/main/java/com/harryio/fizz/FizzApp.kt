@@ -1,13 +1,13 @@
 package com.harryio.fizz
 
 import android.app.Application
-import com.harryio.fizz.network.NetworkModule
+import com.harryio.fizz.network.NetworkInteractor
 
 class FizzApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        NetworkModule.setup(BuildConfig.API_KEY)
+        NetworkInteractor.setup(BuildConfig.API_KEY)
     }
 }

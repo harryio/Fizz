@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -39,18 +40,9 @@ dependencies {
     api project(path: ':repositories:common-repository')
     api project(path: ':common')
 
-    api androidLibs.appCompat
-    api androidLibs.ktx
-    api androidLibs.fragmentKtx
-    api androidLibs.viewModel
-    api androidLibs.liveData
-    api androidLibs.fragment
-    api androidLibs.material
-    api androidLibs.navigationRuntime
-    api androidLibs.navigationFragment
-    api androidLibs.navigationUI
-    api androidLibs.sharedPref
-    api androidLibs.constraintLayout
+    api androidLibraries
 
-    implementation libraries.rxJava
+    implementation dagger.dagger
+
+    kapt compilers.dagger
 }

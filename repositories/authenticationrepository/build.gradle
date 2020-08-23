@@ -35,9 +35,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation project(path: ':repositories:common-repository')
 
-    kapt libraries.daggerCompiler
-    kapt libraries.moshiCodeGen
+    implementation dagger.dagger
+
+    kapt compilers.dagger
+    kapt compilers.moshi
 }

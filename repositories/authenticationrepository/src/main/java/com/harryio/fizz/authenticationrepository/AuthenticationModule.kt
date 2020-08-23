@@ -1,6 +1,6 @@
 package com.harryio.fizz.authenticationrepository
 
-import com.harryio.fizz.network.NetworkModule.retrofit
+import com.harryio.fizz.network.NetworkInteractor.retrofit
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
@@ -19,6 +19,7 @@ object AuthenticationModule {
         retrofit.create(AuthenticationService::class.java)
 
     @Provides
+    @JvmStatic
     fun providesAuthenticationRepository(@InternalApi authenticationService: AuthenticationService):
             AuthenticationRepository = AuthenticationRepositoryImpl(authenticationService)
 }

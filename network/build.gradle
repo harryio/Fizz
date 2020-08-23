@@ -14,15 +14,12 @@ dependencies {
 
     implementation libraries.kotlinStdLib
 
-    implementation libraries.moshi
-    implementation libraries.retrofit
-    implementation libraries.retrofitRxJavaAdapter
-    implementation libraries.retrofitMoshiConverter
-    implementation libraries.networkLogging
-    implementation libraries.dagger
+    implementation networkLibraries.moshi
+    implementation networkLibraries.retrofit
+    implementation networkLibraries.retrofitMoshiConverter
+    implementation networkLibraries.networkLogging
 
-    kapt libraries.daggerCompiler
-    kapt libraries.moshiCodeGen
+    kapt compilers.moshi
 }
 
 sourceCompatibility = "8"

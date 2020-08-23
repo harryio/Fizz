@@ -1,17 +1,16 @@
 ext {
     def kotlinVersion = "1.3.61"
-    def rxJavaVersion = "2.2.19"
     def daggerVersion = "2.27"
     def assistedInjectVersion = "0.5.2"
 
     def appCompatVersion = "1.1.0"
     def ktxVersion = "1.0.2"
-    def fragmentKtxVersion = "1.2.4"
     def lifecycleVersion = "2.2.0"
     def fragmentVersion = "1.2.4"
     def materialVersion = "1.2.0-alpha05"
     def preferenceVersion = "1.1.0"
     def constraintLayoutVersion = "2.0.0-beta4"
+    def legacySupportVersion = '1.0.0'
 
     def jUnitVersion = "4.12"
     def androidJUnitVersion = "1.1.1"
@@ -21,42 +20,56 @@ ext {
     def moshiVersion = '1.9.2'
     def loggingLibVersion = "4.5.0"
 
+    def coroutinesVersion = '1.3.7'
+
     libraries = [
-            kotlinStdLib : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
-            rxJava : "io.reactivex.rxjava2:rxjava:$rxJavaVersion",
-            dagger: "com.google.dagger:dagger:$daggerVersion",
-            daggerCompiler: "com.google.dagger:dagger-compiler:$daggerVersion",
-            assistedInject: "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion",
-            assistedInjectCompiler: "com.squareup.inject:assisted-inject-processor-dagger2:$assistedInjectVersion",
-            moshi: "com.squareup.moshi:moshi:$moshiVersion",
-            moshiCodeGen: "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion",
-            retrofit: "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofitRxJavaAdapter: "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
-            retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
-            networkLogging: "com.squareup.okhttp3:logging-interceptor:$loggingLibVersion"
+            kotlinStdLib          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
     ]
 
-    androidLibs = [
-            appCompat: "androidx.appcompat:appcompat:$appCompatVersion",
-            ktx: "androidx.core:core-ktx:$ktxVersion",
-            fragmentKtx: "androidx.fragment:fragment-ktx:$fragmentKtxVersion",
-            viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
-            liveData: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
-            navigationRuntime: "androidx.navigation:navigation-runtime-ktx:$navVersion",
-            navigationFragment: "androidx.navigation:navigation-fragment-ktx:$navVersion",
-            navigationUI: "androidx.navigation:navigation-ui-ktx:$navVersion",
-            fragment: "androidx.fragment:fragment-ktx:$fragmentVersion",
-            material: "com.google.android.material:material:$materialVersion",
-            sharedPref: "androidx.preference:preference-ktx:$preferenceVersion",
-            constraintLayout: "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    androidLibraries = [
+            "androidx.core:core-ktx:$ktxVersion",
+            "androidx.appcompat:appcompat:$appCompatVersion",
+            "androidx.fragment:fragment-ktx:$fragmentVersion",
+            "androidx.legacy:legacy-support-v4:$legacySupportVersion",
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
+            "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            "androidx.navigation:navigation-runtime-ktx:$navVersion",
+            "androidx.navigation:navigation-fragment-ktx:$navVersion",
+            "androidx.navigation:navigation-ui-ktx:$navVersion",
+            "com.google.android.material:material:$materialVersion",
+            "androidx.preference:preference-ktx:$preferenceVersion",
+            "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+    ]
+
+    networkLibraries = [
+            moshi                 : "com.squareup.moshi:moshi:$moshiVersion",
+            retrofit              : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+            networkLogging        : "com.squareup.okhttp3:logging-interceptor:$loggingLibVersion"
+    ]
+
+    dagger = [
+            dagger: "com.google.dagger:dagger:$daggerVersion",
+            assistedInject:  "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion",
+    ]
+
+    coroutines = [
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    ]
+
+    compilers = [
+            moshi                 : "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion",
+            dagger                : "com.google.dagger:dagger-compiler:$daggerVersion",
+            assistedInject        : "com.squareup.inject:assisted-inject-processor-dagger2:$assistedInjectVersion",
     ]
 
     testLibs = [
-            jUnit: "junit:junit:$jUnitVersion",
+            "junit:junit:$jUnitVersion",
     ]
 
     androidTestLibs = [
-            androidJUnit: "androidx.test.ext:junit:$androidJUnitVersion",
-            espresso: "androidx.test.espresso:espresso-core:$espressoVersion"
+            "androidx.test.ext:junit:$androidJUnitVersion",
+            "androidx.test.espresso:espresso-core:$espressoVersion",
     ]
 }
