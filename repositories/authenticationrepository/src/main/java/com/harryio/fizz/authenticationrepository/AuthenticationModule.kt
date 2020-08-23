@@ -1,6 +1,6 @@
 package com.harryio.fizz.authenticationrepository
 
-import com.harryio.fizz.network.NetworkModule.retrofit
+import com.harryio.fizz.network.NetworkInteractor.retrofit
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier

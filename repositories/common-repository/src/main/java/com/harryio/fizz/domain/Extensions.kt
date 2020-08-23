@@ -4,7 +4,7 @@ import com.harryio.fizz.common.FizzNetworkException
 import com.harryio.fizz.network.ApiErrorResponse
 import com.harryio.fizz.network.ApiResponse
 import com.harryio.fizz.network.ApiSuccessResponse
-import com.harryio.fizz.network.NetworkModule
+import com.harryio.fizz.network.NetworkInteractor
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.reactivex.Single
@@ -64,7 +64,7 @@ suspend fun <T> makeApiCall(apiCall: suspend () -> T): T {
         withContext<T>(Dispatchers.Default) {
             val errorResponse = httpException.response()?.errorBody()?.source()?.let {
                 // TODO: 22/08/20 investigate
-                NetworkModule.moshi.adapter(ErrorResponse::class.java).fromJson(it)
+                NetworkInteractor.moshi.adapter(ErrorResponse::class.java).fromJson(it)
             }
             val networkStatusCode = (httpException as? HttpException)?.code()
             throw FizzNetworkException(
