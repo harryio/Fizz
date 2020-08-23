@@ -18,7 +18,6 @@ dependencies {
     implementation networkLibraries.retrofit
     implementation networkLibraries.retrofitMoshiConverter
     implementation networkLibraries.networkLogging
-    implementation libraries.retrofitRxJavaAdapter
 
     kapt compilers.moshi
 }

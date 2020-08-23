@@ -40,7 +40,6 @@ dependencies {
     api project(path: ':common')
 
     api libraries.kotlinStdLib
-    api libraries.rxJava
     api networkLibraries.moshi
     api networkLibraries.retrofit
 

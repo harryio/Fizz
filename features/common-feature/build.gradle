@@ -40,6 +40,4 @@ dependencies {
     api project(path: ':common')
 
     api androidLibraries
-
-    implementation libraries.rxJava
 }
