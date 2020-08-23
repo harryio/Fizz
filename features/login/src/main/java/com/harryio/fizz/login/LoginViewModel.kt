@@ -17,7 +17,7 @@ private const val AUTHENTICATION_URL =
 private const val KEY_REQUEST_TOKEN = "request_token"
 private const val KEY_APPROVED = "approved"
 
-class LoginViewModel @AssistedInject constructor(
+internal class LoginViewModel @AssistedInject constructor(
     private val authenticationRepository: AuthenticationRepository,
     private val coroutineDispatcher: CoroutineDispatcher,
     @Assisted
