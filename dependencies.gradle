@@ -21,6 +21,8 @@ ext {
     def moshiVersion = '1.9.2'
     def loggingLibVersion = "4.5.0"
 
+    def coroutinesVersion = '1.3.7'
+
     libraries = [
             kotlinStdLib          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
             rxJava                : "io.reactivex.rxjava2:rxjava:$rxJavaVersion",
@@ -52,6 +54,11 @@ ext {
     dagger = [
             dagger: "com.google.dagger:dagger:$daggerVersion",
             assistedInject:  "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion",
+    ]
+
+    coroutines = [
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     ]
 
     compilers = [

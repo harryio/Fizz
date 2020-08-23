@@ -5,7 +5,8 @@ import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import dagger.Subcomponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Provider
 
 @Component(modules = [LoginModule::class, AuthenticationModule::class])
@@ -19,6 +20,13 @@ internal object LoginModule {
 
     @Provides
     @JvmStatic
-    fun provideLoginViewModelFactory(authenticationRepository: Provider<AuthenticationRepository>): LoginViewModel.Factory =
-        LoginViewModel_AssistedFactory(authenticationRepository)
+    fun provideLoginViewModelFactory(
+        authenticationRepository: Provider<AuthenticationRepository>,
+        coroutineDispatcherProvider: Provider<CoroutineDispatcher>
+    ): LoginViewModel.Factory =
+        LoginViewModel_AssistedFactory(authenticationRepository, coroutineDispatcherProvider)
+
+    @Provides
+    @JvmStatic
+    fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
 }

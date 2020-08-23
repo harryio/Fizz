@@ -1,38 +1,44 @@
 package com.harryio.fizz.authenticationrepository
 
 import com.harryio.fizz.common.AuthenticationToken
-import com.harryio.fizz.domain.handleResponse
-import dagger.Binds
-import io.reactivex.Single
-import javax.inject.Inject
+import com.harryio.fizz.domain.makeApiCall
 
 interface AuthenticationRepository {
-    fun getAuthenticationToken(): Single<AuthenticationToken>
 
-    fun createSession(requestToken: String): Single<String>
+    suspend fun getAuthenticationToken(): AuthenticationToken
 
-    fun createSession(username: String, password: String, requestToken: String): Single<String>
+    suspend fun createSession(requestToken: String): String
+
+    suspend fun createSession(
+        username: String,
+        password: String,
+        requestToken: String
+    ): String
 }
 
 internal class AuthenticationRepositoryImpl constructor(private val authenticationService: AuthenticationService) :
     AuthenticationRepository {
 
-    override fun getAuthenticationToken() =
-        authenticationService.createAuthenticationToken().handleResponse()
-            .map { AuthenticationToken(it.requestToken) }
+    override suspend fun getAuthenticationToken() = makeApiCall {
+        val createAuthenticationTokenResponse = authenticationService.createAuthenticationToken()
+        AuthenticationToken(createAuthenticationTokenResponse.requestToken)
+    }
 
-    override fun createSession(requestToken: String) =
-        authenticationService.createSession(CreateSessionRequest(requestToken)).handleResponse()
-            .map { it.sessionId }
+    override suspend fun createSession(requestToken: String) = makeApiCall {
+        authenticationService.createSession(CreateSessionRequest((requestToken))).sessionId
+    }
 
-    override fun createSession(username: String, password: String, requestToken: String) =
+    override suspend fun createSession(
+        username: String,
+        password: String,
+        requestToken: String
+    ): String = makeApiCall {
         authenticationService.createSession(
             CreateSessionWithCredentialsRequest(
                 username,
                 password,
                 requestToken
             )
-        )
-            .handleResponse()
-            .map { it.requestToken }
+        ).requestToken
+    }
 }

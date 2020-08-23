@@ -19,6 +19,7 @@ object AuthenticationModule {
         retrofit.create(AuthenticationService::class.java)
 
     @Provides
+    @JvmStatic
     fun providesAuthenticationRepository(@InternalApi authenticationService: AuthenticationService):
             AuthenticationRepository = AuthenticationRepositoryImpl(authenticationService)
 }
