@@ -43,7 +43,9 @@ dependencies {
     api networkLibraries.moshi
     api networkLibraries.retrofit
 
-    api coroutines
+    api coroutines.core
+
+    api diLibraries.dagger
 
     kapt compilers.moshi
 }

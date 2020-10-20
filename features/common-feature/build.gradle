@@ -41,8 +41,9 @@ dependencies {
     api project(path: ':common')
 
     api androidLibraries
+    api navigation
 
-    implementation dagger.dagger
+    implementation diLibraries.dagger
 
     kapt compilers.dagger
 }

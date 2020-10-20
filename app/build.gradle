@@ -46,12 +46,12 @@ dependencies {
     implementation project(path: ':features:login')
 
     implementation libraries.kotlinStdLib
-    implementation dagger.dagger
+    implementation diLibraries.dagger
 
     implementation androidLibraries
 
     kapt compilers.dagger
 
-    testImplementation testLibs
-    androidTestImplementation androidTestLibs
+    testImplementation testLibraries
+    androidTestImplementation androidTestLibraries
 }

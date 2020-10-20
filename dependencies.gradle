@@ -1,74 +1,102 @@
 ext {
-    def kotlinVersion = "1.3.61"
-    def daggerVersion = "2.27"
-    def assistedInjectVersion = "0.5.2"
-
     def appCompatVersion = "1.1.0"
     def ktxVersion = "1.0.2"
     def lifecycleVersion = "2.2.0"
     def fragmentVersion = "1.2.4"
-    def materialVersion = "1.2.0-alpha05"
+    def materialVersion = "1.3.0-alpha02"
     def preferenceVersion = "1.1.0"
     def constraintLayoutVersion = "2.0.0-beta4"
-    def legacySupportVersion = '1.0.0'
+    def recyclerViewVersion = "1.1.0"
+    def swipeRefreshLayoutVersion = "1.1.0"
+    def viewPagerVersion = "1.0.0"
+    def daggerVersion = "2.27"
+    def assistedInjectVersion = "0.5.2"
 
+    def retrofitVersion = '2.8.1'
+    def moshiVersion = '1.9.2'
+    def loggingLibVersion = "4.5.0"
+    def mockWebServerVersion = "4.9.0"
+
+    def mockitoVersion = "2.23.0"
+    def coreTestingVersion = "2.1.0"
     def jUnitVersion = "4.12"
     def androidJUnitVersion = "1.1.1"
     def espressoVersion = "3.2.0"
 
-    def retrofitVersion  = '2.8.1'
-    def moshiVersion = '1.9.2'
-    def loggingLibVersion = "4.5.0"
+    def koinVersion = "2.1.6"
 
     def coroutinesVersion = '1.3.7'
 
+    def glideVersion = "4.11.0"
+
+    def roomVersion = "2.3.0-alpha02"
+
     libraries = [
-            kotlinStdLib          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            glide       : "com.github.bumptech.glide:glide:$glideVersion",
     ]
 
     androidLibraries = [
             "androidx.core:core-ktx:$ktxVersion",
             "androidx.appcompat:appcompat:$appCompatVersion",
             "androidx.fragment:fragment-ktx:$fragmentVersion",
-            "androidx.legacy:legacy-support-v4:$legacySupportVersion",
             "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
             "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            "com.google.android.material:material:$materialVersion",
+            "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+            "androidx.recyclerview:recyclerview:$recyclerViewVersion",
+            "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion",
+            "androidx.viewpager2:viewpager2:$viewPagerVersion",
+            "androidx.preference:preference-ktx:$preferenceVersion",
+    ]
+
+    navigation = [
             "androidx.navigation:navigation-runtime-ktx:$navVersion",
             "androidx.navigation:navigation-fragment-ktx:$navVersion",
             "androidx.navigation:navigation-ui-ktx:$navVersion",
-            "com.google.android.material:material:$materialVersion",
-            "androidx.preference:preference-ktx:$preferenceVersion",
-            "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
     ]
 
     networkLibraries = [
             moshi                 : "com.squareup.moshi:moshi:$moshiVersion",
+            moshiAdapters         : "com.squareup.moshi:moshi-adapters:$moshiVersion",
             retrofit              : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
             networkLogging        : "com.squareup.okhttp3:logging-interceptor:$loggingLibVersion"
     ]
 
-    dagger = [
-            dagger: "com.google.dagger:dagger:$daggerVersion",
-            assistedInject:  "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion",
+    room = [
+            "androidx.room:room-runtime:$roomVersion",
+            "androidx.room:room-ktx:$roomVersion",
     ]
 
     coroutines = [
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+            core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion",
     ]
 
     compilers = [
             moshi                 : "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion",
+            room                  : "androidx.room:room-compiler:$roomVersion",
             dagger                : "com.google.dagger:dagger-compiler:$daggerVersion",
             assistedInject        : "com.squareup.inject:assisted-inject-processor-dagger2:$assistedInjectVersion",
     ]
 
-    testLibs = [
-            "junit:junit:$jUnitVersion",
+    diLibraries = [
+            koin            : "org.koin:koin-core:$koinVersion",
+            koinAndroid     : "org.koin:koin-android:$koinVersion",
+            dagger          : "com.google.dagger:dagger:$daggerVersion",
+            assistedInject  :  "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion",
     ]
 
-    androidTestLibs = [
+    testLibraries = [
+            "junit:junit:$jUnitVersion",
+            "androidx.arch.core:core-testing:$coreTestingVersion",
+            "org.mockito:mockito-core:$mockitoVersion",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion",
+            "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion",
+    ]
+
+    androidTestLibraries = [
             "androidx.test.ext:junit:$androidJUnitVersion",
             "androidx.test.espresso:espresso-core:$espressoVersion",
     ]
