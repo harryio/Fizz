@@ -17,6 +17,9 @@ private const val AUTHENTICATION_URL =
 private const val KEY_REQUEST_TOKEN = "request_token"
 private const val KEY_APPROVED = "approved"
 
+private const val KEY_USERNAME_INPUT = "username_input"
+private const val KEY_PASSWORD_INPUT = "password_input"
+
 internal class LoginViewModel @AssistedInject constructor(
     private val authenticationRepository: AuthenticationRepository,
     private val coroutineDispatcher: CoroutineDispatcher,
@@ -37,7 +40,7 @@ internal class LoginViewModel @AssistedInject constructor(
     private val createSessionResource = MutableLiveData<Resource<String>>(Resource.empty())
     private val createSessionObserver = getApiCallObserver<String> {
         _sessionIdLiveData.value = Event(it)
-        _loginCompleteLiveData.value = Event(Unit)
+        _loginCompleteLiveData.value = Event(null)
     }
 
     private val _loginButtonEnabled = MediatorLiveData<Boolean>()
@@ -52,8 +55,8 @@ internal class LoginViewModel @AssistedInject constructor(
     internal val sessionIdLiveData: LiveData<Event<String>>
         get() = _sessionIdLiveData
 
-    private val _loginCompleteLiveData = MutableLiveData<Event<Unit>>()
-    internal val loginCompleteLiveData: LiveData<Event<Unit>>
+    private val _loginCompleteLiveData = MutableLiveData<Event<Any?>>()
+    internal val loginCompleteLiveData: LiveData<Event<Any?>>
         get() = _loginCompleteLiveData
 
     private val _showLoader = MutableLiveData(false)
@@ -65,8 +68,8 @@ internal class LoginViewModel @AssistedInject constructor(
     internal val approvedKey
         get() = KEY_APPROVED
 
-    val username = MutableLiveData("")
-    val password = MutableLiveData("")
+    val username = savedStateHandle.getLiveData<String>(KEY_USERNAME_INPUT, "")
+    val password = savedStateHandle.getLiveData<String>(KEY_PASSWORD_INPUT, "")
 
     init {
         loginResource.observeForever(loginObserver)
