@@ -1,5 +1,6 @@
 package com.harryio.fizz.login
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import com.harryio.fizz.common_feature.BaseViewModel
@@ -11,7 +12,8 @@ import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-private const val AUTHENTICATION_URL =
+@VisibleForTesting
+internal const val AUTHENTICATION_URL =
     "https://www.themoviedb.org/authenticate/%s?redirect_to=$LOGIN_DEEPLINK"
 
 private const val KEY_REQUEST_TOKEN = "request_token"
@@ -33,11 +35,11 @@ internal class LoginViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): LoginViewModel
     }
 
-    private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val loginResource = MutableLiveData<Resource<String>>()
     private val loginObserver =
         getApiCallObserver<String> { _openUrl.value = Event(String.format(AUTHENTICATION_URL, it)) }
 
-    private val createSessionResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val createSessionResource = MutableLiveData<Resource<String>>()
     private val createSessionObserver = getApiCallObserver<String> {
         _sessionIdLiveData.value = Event(it)
         _loginCompleteLiveData.value = Event(null)
@@ -59,7 +61,7 @@ internal class LoginViewModel @AssistedInject constructor(
     internal val loginCompleteLiveData: LiveData<Event<Any?>>
         get() = _loginCompleteLiveData
 
-    private val _showLoader = MutableLiveData(false)
+    private val _showLoader = MutableLiveData<Boolean>()
     internal val showLoader: LiveData<Boolean>
         get() = _showLoader
 
@@ -144,7 +146,7 @@ internal class LoginViewModel @AssistedInject constructor(
         _showLoader.value = status == Status.LOADING
 
         when (status) {
-            Status.ERROR -> getNetworkExceptionHandler()(it.throwable!!)
+            Status.ERROR -> getNetworkExceptionHandler()(it.throwable)
             Status.SUCCESS -> successAction(it.data!!)
             Status.LOADING, Status.EMPTY -> Unit
         }

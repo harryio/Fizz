@@ -1,20 +1,24 @@
 package com.harryio.fizz.authenticationrepository
 
 import com.harryio.fizz.common.AuthenticationToken
+import com.harryio.fizz.common.FizzNetworkException
 import com.harryio.fizz.domain.makeApiCall
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 interface AuthenticationRepository {
 
+    @Throws(FizzNetworkException::class)
     suspend fun getAuthenticationToken(): AuthenticationToken
 
+    @Throws(FizzNetworkException::class)
     suspend fun createSession(
         username: String,
         password: String,
         requestToken: String
     ): String
 
+    @Throws(FizzNetworkException::class)
     suspend fun createSession(requestToken: String): String
 }
 
