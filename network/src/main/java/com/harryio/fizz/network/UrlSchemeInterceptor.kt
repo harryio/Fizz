@@ -14,6 +14,7 @@ internal object UrlSchemeInterceptor : Interceptor {
                 .build()
             request = request.newBuilder()
                 .url(newUrl)
+                .removeHeader("Use-Https")
                 .build()
         }
 
