@@ -48,4 +48,6 @@ dependencies {
     api diLibraries.dagger
 
     kapt compilers.moshi
+
+    testImplementation testLibraries
 }

@@ -1,6 +1,6 @@
 package com.harryio.fizz.authenticationrepository
 
-import com.harryio.fizz.network.NetworkInteractor.retrofit
+import com.harryio.fizz.network.FizzNetworkInteractor
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ object AuthenticationModule {
     @JvmStatic
     @InternalApi
     fun providesAuthenticationService(): AuthenticationService =
-        retrofit.create(AuthenticationService::class.java)
+        FizzNetworkInteractor.retrofit.create(AuthenticationService::class.java)
 
     @Provides
     @JvmStatic

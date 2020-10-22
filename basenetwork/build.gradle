@@ -2,16 +2,19 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
-ext {
-    retrofitVersion  = '2.8.1'
-    moshiVersion = '1.9.2'
-    loggingLibVersion = "4.5.0"
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':common')
-    api project(':basenetwork')
+
+    api libraries.kotlinStdLib
+
+    api networkLibraries.moshi
+    api networkLibraries.moshiAdapters
+    api networkLibraries.retrofit
+    api networkLibraries.retrofitMoshiConverter
+    api networkLibraries.networkLogging
+
+    kapt compilers.moshi
 }
 
 sourceCompatibility = "8"
