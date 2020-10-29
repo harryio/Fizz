@@ -1,5 +1,6 @@
 package com.harryio.fizz.login
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.harryio.fizz.authenticationrepository.AuthenticationRepository
 import com.harryio.fizz.common_feature.BaseViewModel
@@ -11,11 +12,15 @@ import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-private const val AUTHENTICATION_URL =
+@VisibleForTesting
+internal const val AUTHENTICATION_URL =
     "https://www.themoviedb.org/authenticate/%s?redirect_to=$LOGIN_DEEPLINK"
 
 private const val KEY_REQUEST_TOKEN = "request_token"
 private const val KEY_APPROVED = "approved"
+
+private const val KEY_USERNAME_INPUT = "username_input"
+private const val KEY_PASSWORD_INPUT = "password_input"
 
 internal class LoginViewModel @AssistedInject constructor(
     private val authenticationRepository: AuthenticationRepository,
@@ -30,14 +35,14 @@ internal class LoginViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): LoginViewModel
     }
 
-    private val loginResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val loginResource = MutableLiveData<Resource<String>>()
     private val loginObserver =
         getApiCallObserver<String> { _openUrl.value = Event(String.format(AUTHENTICATION_URL, it)) }
 
-    private val createSessionResource = MutableLiveData<Resource<String>>(Resource.empty())
+    private val createSessionResource = MutableLiveData<Resource<String>>()
     private val createSessionObserver = getApiCallObserver<String> {
         _sessionIdLiveData.value = Event(it)
-        _loginCompleteLiveData.value = Event(Unit)
+        _loginCompleteLiveData.value = Event(null)
     }
 
     private val _loginButtonEnabled = MediatorLiveData<Boolean>()
@@ -52,11 +57,11 @@ internal class LoginViewModel @AssistedInject constructor(
     internal val sessionIdLiveData: LiveData<Event<String>>
         get() = _sessionIdLiveData
 
-    private val _loginCompleteLiveData = MutableLiveData<Event<Unit>>()
-    internal val loginCompleteLiveData: LiveData<Event<Unit>>
+    private val _loginCompleteLiveData = MutableLiveData<Event<Any?>>()
+    internal val loginCompleteLiveData: LiveData<Event<Any?>>
         get() = _loginCompleteLiveData
 
-    private val _showLoader = MutableLiveData(false)
+    private val _showLoader = MutableLiveData<Boolean>()
     internal val showLoader: LiveData<Boolean>
         get() = _showLoader
 
@@ -65,8 +70,8 @@ internal class LoginViewModel @AssistedInject constructor(
     internal val approvedKey
         get() = KEY_APPROVED
 
-    val username = MutableLiveData("")
-    val password = MutableLiveData("")
+    val username = savedStateHandle.getLiveData<String>(KEY_USERNAME_INPUT, "")
+    val password = savedStateHandle.getLiveData<String>(KEY_PASSWORD_INPUT, "")
 
     init {
         loginResource.observeForever(loginObserver)
@@ -141,7 +146,7 @@ internal class LoginViewModel @AssistedInject constructor(
         _showLoader.value = status == Status.LOADING
 
         when (status) {
-            Status.ERROR -> getNetworkExceptionHandler()(it.throwable!!)
+            Status.ERROR -> getNetworkExceptionHandler()(it.throwable)
             Status.SUCCESS -> successAction(it.data!!)
             Status.LOADING, Status.EMPTY -> Unit
         }

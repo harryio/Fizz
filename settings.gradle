@@ -1,5 +1,6 @@
 rootProject.name='Fizz'
 include ':app'
+include ':basenetwork'
 include ':network'
 include ':common'
 include ':repositories:common-repository'

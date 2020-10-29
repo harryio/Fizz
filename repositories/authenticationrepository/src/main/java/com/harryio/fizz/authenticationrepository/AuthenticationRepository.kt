@@ -1,38 +1,43 @@
 package com.harryio.fizz.authenticationrepository
 
 import com.harryio.fizz.common.AuthenticationToken
+import com.harryio.fizz.common.FizzNetworkException
 import com.harryio.fizz.domain.makeApiCall
+import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
 interface AuthenticationRepository {
 
+    @Throws(FizzNetworkException::class)
     suspend fun getAuthenticationToken(): AuthenticationToken
 
-    suspend fun createSession(requestToken: String): String
-
+    @Throws(FizzNetworkException::class)
     suspend fun createSession(
         username: String,
         password: String,
         requestToken: String
     ): String
+
+    @Throws(FizzNetworkException::class)
+    suspend fun createSession(requestToken: String): String
 }
 
-internal class AuthenticationRepositoryImpl constructor(private val authenticationService: AuthenticationService) :
-    AuthenticationRepository {
+internal class AuthenticationRepositoryImpl @Inject constructor(
+    @InternalApi
+    private val authenticationService: AuthenticationService,
+    private val coroutineDispatcher: CoroutineDispatcher
+) : AuthenticationRepository {
 
-    override suspend fun getAuthenticationToken() = makeApiCall {
+    override suspend fun getAuthenticationToken() = makeApiCall(coroutineDispatcher) {
         val createAuthenticationTokenResponse = authenticationService.createAuthenticationToken()
         AuthenticationToken(createAuthenticationTokenResponse.requestToken)
-    }
-
-    override suspend fun createSession(requestToken: String) = makeApiCall {
-        authenticationService.createSession(CreateSessionRequest((requestToken))).sessionId
     }
 
     override suspend fun createSession(
         username: String,
         password: String,
         requestToken: String
-    ): String = makeApiCall {
+    ): String = makeApiCall(coroutineDispatcher) {
         authenticationService.createSession(
             CreateSessionWithCredentialsRequest(
                 username,
@@ -40,5 +45,9 @@ internal class AuthenticationRepositoryImpl constructor(private val authenticati
                 requestToken
             )
         ).requestToken
+    }
+
+    override suspend fun createSession(requestToken: String) = makeApiCall(coroutineDispatcher) {
+        authenticationService.createSession(CreateSessionRequest((requestToken))).sessionId
     }
 }

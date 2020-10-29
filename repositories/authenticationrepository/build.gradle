@@ -37,8 +37,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':repositories:common-repository')
 
-    implementation dagger.dagger
-
     kapt compilers.dagger
     kapt compilers.moshi
+
+    testImplementation testLibraries
 }

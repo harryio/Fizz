@@ -1,10 +1,10 @@
 package com.harryio.fizz.domain
 
 import com.harryio.fizz.common.FizzNetworkException
-import com.harryio.fizz.network.NetworkInteractor
+import com.harryio.fizz.network.FizzNetworkInteractor
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
@@ -20,14 +20,16 @@ internal fun ErrorResponse?.errorMsgResId(): Int? = when (this?.statusCode) {
     else -> null
 }
 
-suspend fun <T> makeApiCall(apiCall: suspend () -> T): T {
+suspend fun <T> makeApiCall(
+    coroutineDispatcher: CoroutineDispatcher,
+    apiCall: suspend () -> T
+): T {
     try {
         return apiCall()
     } catch (httpException: HttpException) {
-        withContext<T>(Dispatchers.Default) {
+        withContext<T>(coroutineDispatcher) {
             val errorResponse = httpException.response()?.errorBody()?.source()?.let {
-                // TODO: 22/08/20 investigate
-                NetworkInteractor.moshi.adapter(ErrorResponse::class.java).fromJson(it)
+                FizzNetworkInteractor.parseJson(it, ErrorResponse::class.java)
             }
             val networkStatusCode = (httpException as? HttpException)?.code()
             throw FizzNetworkException(

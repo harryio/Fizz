@@ -11,10 +11,10 @@ open class BaseViewModel : ViewModel() {
     val errorMsgLiveData: LiveData<Event<Int>>
         get() = _errorMsgLiveData
 
-    protected fun getNetworkExceptionHandler(defaultErrorId: Int = R.string.error_generic): (Throwable) -> Unit =
-        { throwable: Throwable ->
+    protected fun getNetworkExceptionHandler(defaultErrorId: Int = R.string.error_generic): (Throwable?) -> Unit =
+        { throwable: Throwable? ->
             if (BuildConfig.DEBUG) {
-                throwable.printStackTrace()
+                throwable?.printStackTrace()
             }
 
             _errorMsgLiveData.value =
