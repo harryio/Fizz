@@ -1,10 +1,11 @@
 package com.stakkdev.movierepository
 
+import com.harryio.fizz.domain.PagedResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface MovieService {
+internal interface MovieService {
 
     @GET("/movie/{category}")
-    suspend fun getMoviesByCategory(@Path("category") category : String): MoviesResponse
+    suspend fun getMoviesForCategory(@Path("category") category: String): PagedResponse<MovieResponse>
 }
