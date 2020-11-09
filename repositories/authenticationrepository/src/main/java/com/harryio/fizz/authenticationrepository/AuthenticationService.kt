@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface AuthenticationService {
+internal interface AuthenticationService {
 
     @GET("/3/authentication/token/new")
     suspend fun createAuthenticationToken(): AuthenticationTokenResponse

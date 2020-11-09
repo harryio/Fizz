@@ -1,5 +1,6 @@
 package com.stakkdev.movierepository
 
+import com.harryio.fizz.common.Movie
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -18,4 +19,23 @@ internal data class MovieResponse(
     @Json(name = "vote_count") val voteCount: Long?,
     @Json(name = "video") val video: Boolean?,
     @Json(name = "vote_average") val voteAverage: Float?
-)
+) {
+
+    fun isValid(): Boolean = (id != null) && !title.isNullOrEmpty() && !overview.isNullOrEmpty()
+
+    fun toMovie() = Movie(
+        id!!,
+        title!!,
+        overview!!,
+        posterPath,
+        backdropPath,
+        isAdult,
+        releaseDate,
+        originalTitle ?: title,
+        originalLanguage,
+        popularity,
+        voteCount,
+        video,
+        voteAverage
+    )
+}
