@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 interface MovieRepository {
 
     @Throws(FizzNetworkException::class)
-    suspend fun getMovies(category: String): List<Movie>
+    suspend fun getPopularMovies(): List<Movie>
 }
 
 internal class MovieRepositoryImpl(
@@ -17,9 +17,9 @@ internal class MovieRepositoryImpl(
     private val coroutineDispatcher: CoroutineDispatcher
 ) : MovieRepository {
 
-    override suspend fun getMovies(category: String): List<Movie> {
+    override suspend fun getPopularMovies(): List<Movie> {
         val moviesResults = makeApiCall(coroutineDispatcher) {
-            movieService.getMoviesForCategory(category).results
+            movieService.getPopularMovies().results
         }
 
         return moviesResults.filter { it.isValid() }

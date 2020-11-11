@@ -1,3 +1,4 @@
+include ':features:movie-list'
 rootProject.name = 'Fizz'
 include ':app'
 include ':basenetwork'

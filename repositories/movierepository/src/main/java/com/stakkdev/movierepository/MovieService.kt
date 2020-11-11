@@ -6,6 +6,6 @@ import retrofit2.http.Path
 
 internal interface MovieService {
 
-    @GET("/movie/{category}")
-    suspend fun getMoviesForCategory(@Path("category") category: String): PagedResponse<MovieResponse>
+    @GET("/movie/popular")
+    suspend fun getPopularMovies(): PagedResponse<MovieResponse>
 }
