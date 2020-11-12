@@ -30,15 +30,14 @@ assembleDebug:
   stage: build
   script:
     - ./gradlew assembleDebug
-  only:
-    - merge_requests
   except:
-    refs:
-      - develop
+    - merge_requests
 
 debugTests:
   stage: test
   script:
-    - ./gradlew -Pci --console=plain :app:testDebug
-  only:
-    - merge_requests
+    - ./gradlew testDebugUnitTest --console=plain
+  only: [merge_requests]
+  except:
+    variables:
+      - ($CI_COMMIT_REF_NAME = "master" || $CI_COMMIT_REF_NAME = "develop")
