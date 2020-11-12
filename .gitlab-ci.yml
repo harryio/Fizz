@@ -32,7 +32,8 @@ assembleDebug:
     - ./gradlew assembleDebug
   only:
     - merge_requests
-  except: [develop]
+  except:
+    - develop
 
 debugTests:
   stage: test
