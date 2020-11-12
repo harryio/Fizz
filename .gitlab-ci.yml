@@ -40,4 +40,4 @@ debugTests:
   only: [merge_requests]
   except:
     variables:
-      - ($CI_COMMIT_REF_NAME = "master" || $CI_COMMIT_REF_NAME = "develop")
+      - ($CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_REF_NAME == "develop")
