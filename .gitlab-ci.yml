@@ -23,17 +23,15 @@ before_script:
   - echo -e "\ntmdb_api_key=\"$TMDB_API_KEY\"" >> gradle.properties
 
 stages:
-  # Uncomment when deployment is added
-  #  - build
+  - build
   - test
 
-# Uncomment when deployment is added
-#assembleDebug:
-#  stage: build
-#  script:
+assembleDebug:
+  stage: build
+  script:
+    - echo "Temp job for develop until CD is added"
 #    - ./gradlew assembleDebug
-#  except:
-#    - merge_requests
+  except: [merge_requests]
 
 debugTests:
   stage: test
