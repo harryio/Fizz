@@ -33,7 +33,8 @@ assembleDebug:
   only:
     - merge_requests
   except:
-    - develop
+    refs:
+      - develop
 
 debugTests:
   stage: test
