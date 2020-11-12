@@ -22,21 +22,14 @@ before_script:
   - set -o pipefail
 
 stages:
-  - addApiKeys
   - build
   - test
-
-addApiKeys:
-  stage: build
-  script:
-    - echo "Adding Api Keys to gradle.properties"
-      --echo -e "\ntmdb_api_key=\"$TMDB_API_KEY\"" >> gradle.properties
-      --cat gradle.properties
 
 assembleDebug:
   stage: build
   script:
-    - ./gradlew assembleDebug
+    - echo -e "\ntmdb_api_key=\"$TMDB_API_KEY\"" >> gradle.properties
+      --./gradlew assembleDebug
   only:
     - merge_requests
   artifacts:
