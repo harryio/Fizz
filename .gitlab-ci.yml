@@ -20,6 +20,7 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
+  - echo -e "\ntmdb_api_key=\"$TMDB_API_KEY\"" >> gradle.properties
 
 stages:
   - build
@@ -28,13 +29,9 @@ stages:
 assembleDebug:
   stage: build
   script:
-    - echo -e "\ntmdb_api_key=\"$TMDB_API_KEY\"" >> gradle.properties
-      --./gradlew assembleDebug
+    - ./gradlew assembleDebug
   only:
     - merge_requests
-  artifacts:
-    paths:
-      - app/build/outputs/
 
 debugTests:
   stage: test
