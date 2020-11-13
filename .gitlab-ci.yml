@@ -21,6 +21,13 @@ before_script:
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
   - echo -e "\ntmdb_api_key=\"$TMDB_API_KEY\"" >> gradle.properties
+  - export GRADLE_USER_HOME=$PWD/.gradle
+
+cache:
+  key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
 
 stages:
   - build
@@ -31,7 +38,9 @@ assembleDebug:
   script:
     - echo "Temp job for develop until CD is added"
 #    - ./gradlew assembleDebug
-  except: [merge_requests]
+  only:
+    variables:
+      - $CI_COMMIT_REF_NAME == "develop"
 
 debugTests:
   stage: test
