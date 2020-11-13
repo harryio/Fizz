@@ -3,7 +3,7 @@ image: openjdk:8-jdk
 variables:
   ANDROID_COMPILE_SDK: "30"
   ANDROID_BUILD_TOOLS: "29.0.3"
-  ANDROID_SDK_TOOLS:   "4333796"
+  ANDROID_SDK_TOOLS: "4333796"
 
 before_script:
   - apt-get --quiet update --yes
@@ -24,7 +24,12 @@ before_script:
   - export GRADLE_USER_HOME=$PWD/.gradle
 
 cache:
-  key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+  key:
+    files:
+      - build.gradle
+      - app/build.gradle
+    prefix: jars
+
   paths:
     - .gradle/wrapper
     - .gradle/caches
