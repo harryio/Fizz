@@ -36,8 +36,7 @@ stages:
 assembleDebug:
   stage: build
   script:
-    - echo "Temp job for develop until CD is added"
-#    - ./gradlew assembleDebug
+    - ./gradlew assembleDebug
   only:
     variables:
       - $CI_COMMIT_REF_NAME == "develop"
