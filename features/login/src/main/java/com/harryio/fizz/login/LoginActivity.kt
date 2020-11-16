@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.harryio.fizz.authenticationrepository.DaggerAuthenticationComponent
 import com.harryio.fizz.common_feature.EventObserver
 import com.harryio.fizz.common_feature.activitySavedStateViewModels
 
@@ -20,7 +21,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loginComponent = DaggerLoginComponent.create()
+        loginComponent = DaggerLoginComponent.builder()
+            .authenticationComponent(DaggerAuthenticationComponent.create())
+            .build()
 
         viewModel.errorMsgLiveData.observe(this, EventObserver {
             Snackbar.make(findViewById(R.id.fragment_container_view), it, Snackbar.LENGTH_SHORT)

@@ -1,6 +1,6 @@
 package com.harryio.fizz.login
 
-import com.harryio.fizz.authenticationrepository.AuthenticationModule
+import com.harryio.fizz.authenticationrepository.AuthenticationComponent
 import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Component
 import dagger.Module
@@ -8,7 +8,7 @@ import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-@Component(modules = [LoginModule::class, AuthenticationModule::class])
+@Component(modules = [LoginModule::class], dependencies = [AuthenticationComponent::class])
 internal interface LoginComponent {
 
     fun loginViewModelFactory(): LoginViewModel.Factory

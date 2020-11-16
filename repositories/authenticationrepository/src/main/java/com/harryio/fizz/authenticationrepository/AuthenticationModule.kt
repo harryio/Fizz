@@ -1,6 +1,8 @@
 package com.harryio.fizz.authenticationrepository
 
 import com.harryio.fizz.network.FizzNetworkInteractor
+import dagger.BindsInstance
+import dagger.Component
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
@@ -10,19 +12,22 @@ import javax.inject.Qualifier
 @Qualifier
 internal annotation class InternalApi
 
+@Component(modules = [AuthenticationModule::class])
+interface AuthenticationComponent {
+
+    fun providesAuthenticationRepository(): AuthenticationRepository
+}
+
 @Module
-object AuthenticationModule {
+internal object AuthenticationModule {
 
     @Provides
     @JvmStatic
-    @InternalApi
     fun providesAuthenticationService(): AuthenticationService =
         FizzNetworkInteractor.retrofit.create(AuthenticationService::class.java)
 
     @Provides
     @JvmStatic
-    fun providesAuthenticationRepository(
-        @InternalApi authenticationService: AuthenticationService
-    ): AuthenticationRepository =
+    fun providesAuthenticationRepository(authenticationService: AuthenticationService): AuthenticationRepository =
         AuthenticationRepositoryImpl(authenticationService, Dispatchers.IO)
 }
