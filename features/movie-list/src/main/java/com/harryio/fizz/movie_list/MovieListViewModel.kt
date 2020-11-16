@@ -17,7 +17,7 @@ class MovieListViewModel constructor(
 ) : BaseViewModel() {
 
     private val _movieList = MutableLiveData<List<Movie>>()
-    internal val movieList : LiveData<List<Movie>>
+    internal val movieList: LiveData<List<Movie>>
         get() = _movieList
 
     init {
@@ -25,6 +25,6 @@ class MovieListViewModel constructor(
     }
 
     private fun fetchMovieList() = viewModelScope.launch(coroutineDispatcher) {
-       _movieList.value = movieRepository.getPopularMovies()
+        _movieList.value = movieRepository.getPopularMovies()
     }
 }

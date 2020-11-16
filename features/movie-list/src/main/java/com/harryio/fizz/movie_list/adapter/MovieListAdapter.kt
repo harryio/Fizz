@@ -4,30 +4,42 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.harryio.fizz.common.Movie
 import com.harryio.fizz.movie_list.R
+import com.harryio.fizz.movie_list.databinding.MovieListItemBinding
 
-class MovieListAdapter(val movieList: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+private val listDiffer = object : DiffUtil.ItemCallback<Movie>() {
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+        oldItem.id == newItem.id
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
+}
+
+class MovieListAdapter : ListAdapter<Movie, MovieViewHolder>(listDiffer) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflator = LayoutInflater.from(parent.context)
         val binding =
-            DataBindingUtil.inflate<ViewDataBinding>(layoutInflator, R.layout.movie_list_item,parent, false)
+            DataBindingUtil.inflate<MovieListItemBinding>(
+                layoutInflator,
+                R.layout.movie_list_item,
+                parent,
+                false
+            )
         return MovieViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
+}
 
-    override fun getItemCount(): Int {
-        return movieList.size
-    }
-
-    inner class MovieViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-        internal fun bind(movie: Movie) {
-
-        }
+class MovieViewHolder(private val binding: MovieListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+    internal fun bind(movie: Movie) {
+        binding.movie = movie
     }
 }
