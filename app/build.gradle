@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.harryio.fizz"
+        applicationId "com.stakkdev.fizz"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
