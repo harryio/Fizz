@@ -12,8 +12,7 @@ import kotlinx.coroutines.launch
 
 class MovieListViewModel constructor(
     private val movieRepository: MovieRepository,
-    private val coroutineDispatcher: CoroutineDispatcher,
-    private val savedStateHandle: SavedStateHandle
+    private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     private val _movieList = MutableLiveData<List<Movie>>()

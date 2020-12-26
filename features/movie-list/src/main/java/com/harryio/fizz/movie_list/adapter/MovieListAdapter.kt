@@ -41,5 +41,6 @@ class MovieViewHolder(private val binding: MovieListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     internal fun bind(movie: Movie) {
         binding.movie = movie
+        binding.executePendingBindings()
     }
 }

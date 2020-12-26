@@ -6,15 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.harryio.fizz.common.Movie
 import com.harryio.fizz.common_feature.BaseFragment
 import com.harryio.fizz.movie_list.adapter.MovieListAdapter
 import com.harryio.fizz.movie_list.databinding.FragmentMovieListBinding
+import com.stakkdev.movierepository.MovieRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 class MovieListFragment : BaseFragment() {
 
-    private val viewModel by viewModels<MovieListViewModel>()
+    private val viewModel by viewModels<MovieListViewModel>(factoryProducer = {
+        object: ViewModelProvider.Factory {
+            override fun <T: ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return MovieListViewModel(movieRepository, Dispatchers.Main.immediate) as T
+            }
+        }
+    })
+
+    private lateinit var movieRepository: MovieRepository
+
     private lateinit var binding: FragmentMovieListBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        movieRepository = MovieRepository.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
