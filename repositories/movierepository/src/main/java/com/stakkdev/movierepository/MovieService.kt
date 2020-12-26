@@ -6,6 +6,6 @@ import retrofit2.http.Path
 
 internal interface MovieService {
 
-    @GET("/movie/popular")
+    @GET("/3/movie/popular")
     suspend fun getPopularMovies(): PagedResponse<MovieResponse>
 }
