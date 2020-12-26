@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.harryio.fizz.login.LoginFragment"
+        android:name="com.stakkdev.fizz.login.LoginFragment"
         android:label="@string/login" />
 
 </navigation>

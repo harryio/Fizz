@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.harryio.fizz"
+        applicationId "com.stakkdev.fizz"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -27,8 +27,8 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     compileOptions {
