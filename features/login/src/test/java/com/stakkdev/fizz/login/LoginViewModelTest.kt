@@ -6,11 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.stakkdev.fizz.authenticationrepository.AuthenticationRepository
 import com.stakkdev.fizz.common.AuthenticationToken
 import com.stakkdev.fizz.common.FizzNetworkException
-import com.harryio.common_feature.Event
-import com.harryio.common_feature.R
-import com.harryio.fizz.login.R.*
-import com.stakkdev.fizz.login.AUTHENTICATION_URL
-import com.stakkdev.fizz.login.LoginViewModel
+import com.stakkdev.common_feature.Event
+import com.stakkdev.common_feature.R
+import com.stakkdev.fizz.login.R.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
