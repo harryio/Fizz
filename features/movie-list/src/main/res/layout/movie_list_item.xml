@@ -5,7 +5,7 @@
 
         <variable
             name="movie"
-            type="com.harryio.fizz.common.Movie" />
+            type="com.stakkdev.fizz.common.Movie" />
     </data>
 
     <TextView

@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.harryio.fizz.login.LoginViewModel" />
+            type="com.stakkdev.fizz.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -9,12 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.harryio.fizz.common.Movie
-import com.harryio.fizz.common_feature.BaseFragment
+import com.stakkdev.common_feature.BaseFragment
 import com.harryio.fizz.movie_list.adapter.MovieListAdapter
 import com.harryio.fizz.movie_list.databinding.FragmentMovieListBinding
-import com.stakkdev.movierepository.MovieRepository
-import kotlinx.coroutines.CoroutineDispatcher
+import com.stakkdev.fizz.movierepository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 
 class MovieListFragment : BaseFragment() {

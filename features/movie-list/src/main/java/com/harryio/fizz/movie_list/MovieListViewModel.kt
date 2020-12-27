@@ -2,11 +2,10 @@ package com.harryio.fizz.movie_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.harryio.fizz.common.Movie
-import com.harryio.fizz.common_feature.BaseViewModel
-import com.stakkdev.movierepository.MovieRepository
+import com.stakkdev.fizz.common.Movie
+import com.stakkdev.common_feature.BaseViewModel
+import com.stakkdev.fizz.movierepository.MovieRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 

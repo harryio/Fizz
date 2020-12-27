@@ -3,11 +3,10 @@ package com.harryio.fizz.movie_list.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.harryio.fizz.common.Movie
+import com.stakkdev.fizz.common.Movie
 import com.harryio.fizz.movie_list.R
 import com.harryio.fizz.movie_list.databinding.MovieListItemBinding
 
