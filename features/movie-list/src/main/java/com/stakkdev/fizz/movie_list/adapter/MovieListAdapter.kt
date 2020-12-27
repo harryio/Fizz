@@ -1,4 +1,4 @@
-package com.harryio.fizz.movie_list.adapter
+package com.stakkdev.fizz.movie_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stakkdev.fizz.common.Movie
-import com.harryio.fizz.movie_list.R
-import com.harryio.fizz.movie_list.databinding.MovieListItemBinding
+import com.stakkdev.fizz.movie_list.R
+import com.stakkdev.fizz.movie_list.databinding.MovieListItemBinding
 
 private val listDiffer = object : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =

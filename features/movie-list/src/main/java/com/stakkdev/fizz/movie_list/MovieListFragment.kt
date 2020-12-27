@@ -1,4 +1,4 @@
-package com.harryio.fizz.movie_list
+package com.stakkdev.fizz.movie_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.stakkdev.common_feature.BaseFragment
-import com.harryio.fizz.movie_list.adapter.MovieListAdapter
-import com.harryio.fizz.movie_list.databinding.FragmentMovieListBinding
+import com.stakkdev.fizz.movie_list.adapter.MovieListAdapter
+import com.stakkdev.fizz.movie_list.databinding.FragmentMovieListBinding
 import com.stakkdev.fizz.movierepository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 
@@ -59,6 +59,5 @@ class MovieListFragment : BaseFragment() {
         viewModel.movieList.observe(viewLifecycleOwner, Observer {
             movieListAdapter.submitList(it)
         })
-
     }
 }

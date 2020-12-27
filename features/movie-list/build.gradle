@@ -29,9 +29,10 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -41,12 +42,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(path: ':features:common-feature')
     api project(path: ':repositories:movierepository')
-
-    implementation diLibraries.dagger
-    compileOnly diLibraries.assistedInject
-
-    kapt compilers.dagger
-    kapt compilers.assistedInject
 
     testImplementation testLibraries
     androidTestImplementation androidTestLibraries

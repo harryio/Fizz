@@ -1,4 +1,4 @@
-package com.harryio.fizz.movie_list
+package com.stakkdev.fizz.movie_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

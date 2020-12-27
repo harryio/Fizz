@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.harryio.fizz.movie_list.MovieListViewModel" />
+            type="com.stakkdev.fizz.movie_list.MovieListViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
