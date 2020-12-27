@@ -6,9 +6,8 @@ import com.stakkdev.fizz.common.Movie
 import com.stakkdev.fizz.movierepository.MovieRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
+import org.junit.*
+import org.junit.Assert.assertTrue
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -37,6 +36,12 @@ class MovieListViewModelTest {
     @After
     fun tearDown() {
         movieListViewModel.movieList.removeObserver(movieListObserver)
+    }
+
+    @Test
+    fun removeTest() {
+        //todo remove this mock test
+        assertTrue(true)
     }
 
     private fun getMockMovie() = Movie(
